@@ -2,13 +2,17 @@ import { Sprite } from './modules/sprites.js'
 import { Player } from './modules/player.js'
 import { Input } from './modules/input.js'
 import { Bullet } from './modules/bullet.js'
+import { Enemy } from './modules/enemy.js'
 
 let input = new Input();
 let canvas = document.querySelector(".gameCanvas");
 let ctx = canvas.getContext('2d');
-let player = new Player(new Sprite('./images/player_test.png', .6, 500, 500, true, 2))
+let player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2))
+
+const spawns = [{x: 30, y: 525}, {x: 970, y: 525}, {x: 525, y: 30}, {x: 525, y: 970}]
 
 let bullets = []
+let enemies = []
 
 const sprites = {
     background: new Sprite('./images/background.png'),
@@ -16,9 +20,9 @@ const sprites = {
 };
 
 let animFrame = 0;
-let animationSpeed = 200;
+let animationSpeed = 400;
 let bulletTimer = 0;
-const bulletRate = 3000; // Interval between bullets in milliseconds
+const bulletRate = 8000; // Interval between bullets in milliseconds
 
 function createCanvas(width, height){
     // Set canvas width and height
@@ -27,11 +31,22 @@ function createCanvas(width, height){
 }
 
 function setup(){
-    bullets.push(new Bullet(new Sprite('./images/bullet.png', 3), {x: 1, y: 1}, {x: 500, y: 500}))
+    enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, 525, 30, true, 2), player, bullets));
     let width = 1000;
     let height = 1000;
     createCanvas(width, height);
 }
+
+function randomSpawnPoint() {
+    return spawns[Math.floor(Math.random() * spawns.length)];
+}
+
+function randomTime(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+let enemySpawnTimer = randomTime(3000, 8000); // Initial delay before spawning the first enemy
+let elapsedTimeSinceSpawn = 0;
 
 function draw(){
     for (const key in sprites) {
@@ -45,18 +60,31 @@ function draw(){
         }
     }
 
+    for(const enemy of enemies){
+        ctx.drawImage(enemy.sprite.image, enemy.sprite.getFrameX(animFrame), 0, enemy.sprite.frameWidth, enemy.sprite.image.height, enemy.x - (enemy.sprite.width / 2), enemy.y - (enemy.sprite.height / 2), enemy.sprite.width, enemy.sprite.height);
+    }
+
     for(const bullet of bullets){
         ctx.drawImage(bullet.sprite.image, bullet.x, bullet.y, bullet.sprite.width, bullet.sprite.height);
     }
 }
 
 function update(){
-    player.move(input.playerDir());
+    player.move(input.playerDirection);
+
+    for (let i = 0; i < enemies.length; i++) {
+        const enemy = enemies[i];
+        enemy.update();
+        
+        if (enemy.killed) {
+            enemies.splice(i, 1);
+            i--;
+        }
+    }
 
     for (let i = 0; i < bullets.length; i++) {
         const bullet = bullets[i];
         bullet.update();
-        bullet.move();
         
         if (bullet.destroyed) {
             bullets.splice(i, 1);
@@ -66,9 +94,18 @@ function update(){
 
     if (input.isShooting) {
         if (bulletTimer >= bulletRate) {
-            bullets.push(new Bullet(new Sprite('./images/bullet.png', 3), input.gunDir(), player.position));
+            bullets.push(new Bullet(new Sprite('./images/bullet.png', 4), input.gunDirection, player.position));
             bulletTimer = 0; // Reset the timer
         }
+    }
+
+    // Spawn enemies
+    elapsedTimeSinceSpawn += animationSpeed;
+    if (elapsedTimeSinceSpawn >= enemySpawnTimer) {
+        const spawnPoint = randomSpawnPoint();
+        enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, spawnPoint.x, spawnPoint.y, true, 2), player, bullets));
+        elapsedTimeSinceSpawn = 0;
+        enemySpawnTimer = randomTime(30000, 60000); // Reset spawn timer for the next enemy
     }
 
     // Increment the bullet timer

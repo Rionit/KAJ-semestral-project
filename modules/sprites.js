@@ -1,6 +1,5 @@
 export class Sprite {
-    #currentX
-    #currentY
+    #position
     #factor
 
     constructor(url, factor = 1, x=0, y=0, animated = false, numFrames = 1) {
@@ -9,8 +8,7 @@ export class Sprite {
         this.numFrames = numFrames;
         this.image = new Image();
         this.loaded = false;
-        this.#currentX = x;
-        this.#currentY = y;
+        this.#position = {x: x, y: y};
         this.#factor = factor;
         
         this.#loadImage();
@@ -32,20 +30,24 @@ export class Sprite {
     
     // Getter and setter for x position
     get x() {
-        return this.#currentX;
+        return this.#position.x;
     }
     
     // Getter and setter for y position
     get y() {
-        return this.#currentY;
+        return this.#position.y;
+    }
+
+    get position(){
+        return this.#position;
     }
     
     set x(value) {
-        this.#currentX = value;
+        this.#position.x = value;
     }
     
     set y(value) {
-        this.#currentY = value;
+        this.#position.y = value;
     }
 
 }

@@ -14,9 +14,23 @@ export class Bullet {
         this.#ttl = 250;
     }
 
+    checkBoundaryY(y){
+        let s = this.#sprite;
+        return (y - (s.height / 2) <= 50 || y + (s.height / 2) >= 950) ? false : true;
+    }
+
+    checkBoundaryX(x){
+        let s = this.#sprite;
+        return (x - (s.width / 2) <= 50 || x + (s.width / 2) >= 950) ? false : true;
+    }
+
     move(){
-        this.#position.x += this.#direction.x * this.#speed;
-        this.#position.y += this.#direction.y * this.#speed;
+        let newPos = {x: this.#position.x + this.#direction.x * this.#speed, y: this.#position.y + this.#direction.y * this.#speed};
+        
+        if(!this.checkBoundaryX(newPos.x) || !this.checkBoundaryX(newPos.y)) this.#destroyed = true;
+
+        this.#position.x = newPos.x;
+        this.#position.y = newPos.y;
     }
 
     get sprite(){
@@ -27,7 +41,11 @@ export class Bullet {
         if(this.#ttl-- < 0 ) {
             this.#destroyed = true;
         };
+
+        this.move();
     }
+
+    destroy(){this.#destroyed = true}
 
     get destroyed() {return this.#destroyed};
     get x(){ return this.#position.x;}

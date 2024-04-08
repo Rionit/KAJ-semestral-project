@@ -3,6 +3,8 @@ export class Input{
     #pressedKeys
     #isShooting
     #isMoving
+    #gunDirection
+    #playerDirection
     
     constructor() {
         this.#pressedKeys = {w: false, a: false, s: false, d: false, ArrowDown: false, ArrowUp: false, ArrowLeft: false, ArrowRight: false};
@@ -19,7 +21,7 @@ export class Input{
         }
     }
 
-    playerDir() {
+    get playerDirection() {
         const x = (this.#pressedKeys["d"] ? 1 : 0) + (this.#pressedKeys["a"] ? -1 : 0);
         const y = (this.#pressedKeys["s"] ? 1 : 0) + (this.#pressedKeys["w"] ? -1 : 0);
         
@@ -36,7 +38,7 @@ export class Input{
         return (this.#pressedKeys["w"] || this.#pressedKeys["a"] || this.#pressedKeys["s"] || this.#pressedKeys["d"]) ? true : false;
     }
 
-    gunDir() {
+    get gunDirection() {
         const x = (this.#pressedKeys["ArrowRight"] ? 1 : 0) + (this.#pressedKeys["ArrowLeft"] ? -1 : 0);
         const y = (this.#pressedKeys["ArrowDown"] ? 1 : 0) + (this.#pressedKeys["ArrowUp"] ? -1 : 0);
         
