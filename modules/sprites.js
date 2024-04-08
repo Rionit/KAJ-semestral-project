@@ -3,7 +3,7 @@ export class Sprite {
     #currentY
     #factor
 
-    constructor(url, x=0, y=0, animated = false, numFrames = 1, factor = 1) {
+    constructor(url, factor = 1, x=0, y=0, animated = false, numFrames = 1) {
         this.url = url;
         this.animated = animated;
         this.numFrames = numFrames;

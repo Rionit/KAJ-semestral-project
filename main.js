@@ -1,19 +1,24 @@
 import { Sprite } from './modules/sprites.js'
 import { Player } from './modules/player.js'
 import { Input } from './modules/input.js'
+import { Bullet } from './modules/bullet.js'
 
 let input = new Input();
 let canvas = document.querySelector(".gameCanvas");
 let ctx = canvas.getContext('2d');
-let player = new Player(new Sprite('./images/player_test.png', 500, 500, true, 2, .6))
+let player = new Player(new Sprite('./images/player_test.png', .6, 500, 500, true, 2))
+
+let bullets = []
+
 const sprites = {
     background: new Sprite('./images/background.png'),
     player: player.sprite
 };
 
-
 let animFrame = 0;
 let animationSpeed = 200;
+let bulletTimer = 0;
+const bulletRate = 3000; // Interval between bullets in milliseconds
 
 function createCanvas(width, height){
     // Set canvas width and height
@@ -22,6 +27,7 @@ function createCanvas(width, height){
 }
 
 function setup(){
+    bullets.push(new Bullet(new Sprite('./images/bullet.png', 3), {x: 1, y: 1}, {x: 500, y: 500}))
     let width = 1000;
     let height = 1000;
     createCanvas(width, height);
@@ -38,6 +44,35 @@ function draw(){
             ctx.drawImage(sprite.image, x, y, sprite.width, sprite.height);
         }
     }
+
+    for(const bullet of bullets){
+        ctx.drawImage(bullet.sprite.image, bullet.x, bullet.y, bullet.sprite.width, bullet.sprite.height);
+    }
+}
+
+function update(){
+    player.move(input.playerDir());
+
+    for (let i = 0; i < bullets.length; i++) {
+        const bullet = bullets[i];
+        bullet.update();
+        bullet.move();
+        
+        if (bullet.destroyed) {
+            bullets.splice(i, 1);
+            i--;
+        }
+    }
+
+    if (input.isShooting) {
+        if (bulletTimer >= bulletRate) {
+            bullets.push(new Bullet(new Sprite('./images/bullet.png', 3), input.gunDir(), player.position));
+            bulletTimer = 0; // Reset the timer
+        }
+    }
+
+    // Increment the bullet timer
+    bulletTimer += animationSpeed;
 }
 
 var fps, fpsInterval, startTime, now, then, elapsed;
@@ -62,8 +97,9 @@ function animate(){
 
         then = now - (elapsed % fpsInterval);
 
+        update();
         draw();
-        player.move(input.playerDir());
+
     }
 }
 
