@@ -4,7 +4,7 @@ let canvas = document.querySelector(".gameCanvas");
 let ctx = canvas.getContext('2d');
 const sprites = {
     background: new Sprite('./images/background.png'),
-    player: new Sprite('./images/player_test.png', true, 2)
+    player: new Sprite('./images/player_test.png', 100, 100, true, 2)
 };
 
 let animFrame = 0;
@@ -28,7 +28,7 @@ function draw(){
         const { x, y } = sprite;
 
         if (sprite.animated) {
-            ctx.drawImage(sprite.image, sprite.getFrameX(animFrame), 0, sprite.frameWidth, sprite.image.height, x, y, x + sprite.frameWidth, y + sprite.image.height);
+            ctx.drawImage(sprite.image, sprite.getFrameX(animFrame), 0, sprite.frameWidth, sprite.image.height, x, y, sprite.frameWidth, sprite.image.height);
         } else {
             ctx.drawImage(sprite.image, x, y, x + sprite.image.width, y + sprite.image.height);
         }

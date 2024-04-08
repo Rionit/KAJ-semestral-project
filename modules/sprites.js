@@ -2,14 +2,14 @@ export class Sprite {
     #currentX
     #currentY
     
-    constructor(url, animated = false, numFrames = 1) {
+    constructor(url, x=0, y=0, animated = false, numFrames = 1) {
         this.url = url;
         this.animated = animated;
         this.numFrames = numFrames;
         this.image = new Image();
         this.loaded = false;
-        this.#currentX = 0;
-        this.#currentY = 0;
+        this.#currentX = x;
+        this.#currentY = y;
         
         this.#loadImage();
     }
