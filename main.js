@@ -1,11 +1,16 @@
 import { Sprite } from './modules/sprites.js'
+import { Player } from './modules/player.js'
+import { Input } from './modules/input.js'
 
+let input = new Input();
 let canvas = document.querySelector(".gameCanvas");
 let ctx = canvas.getContext('2d');
+let player = new Player(new Sprite('./images/player_test.png', 500, 500, true, 2, .6))
 const sprites = {
     background: new Sprite('./images/background.png'),
-    player: new Sprite('./images/player_test.png', 100, 100, true, 2)
+    player: player.sprite
 };
+
 
 let animFrame = 0;
 let animationSpeed = 200;
@@ -28,9 +33,9 @@ function draw(){
         const { x, y } = sprite;
 
         if (sprite.animated) {
-            ctx.drawImage(sprite.image, sprite.getFrameX(animFrame), 0, sprite.frameWidth, sprite.image.height, x, y, sprite.frameWidth, sprite.image.height);
+            ctx.drawImage(sprite.image, sprite.getFrameX(animFrame), 0, sprite.frameWidth, sprite.image.height, x - (sprite.width / 2), y - (sprite.height / 2), sprite.width, sprite.height);
         } else {
-            ctx.drawImage(sprite.image, x, y, x + sprite.image.width, y + sprite.image.height);
+            ctx.drawImage(sprite.image, x, y, sprite.width, sprite.height);
         }
     }
 }
@@ -58,6 +63,7 @@ function animate(){
         then = now - (elapsed % fpsInterval);
 
         draw();
+        player.move(input.playerDir());
     }
 }
 

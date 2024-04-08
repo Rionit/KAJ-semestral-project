@@ -1,8 +1,9 @@
 export class Sprite {
     #currentX
     #currentY
-    
-    constructor(url, x=0, y=0, animated = false, numFrames = 1) {
+    #factor
+
+    constructor(url, x=0, y=0, animated = false, numFrames = 1, factor = 1) {
         this.url = url;
         this.animated = animated;
         this.numFrames = numFrames;
@@ -10,6 +11,7 @@ export class Sprite {
         this.loaded = false;
         this.#currentX = x;
         this.#currentY = y;
+        this.#factor = factor;
         
         this.#loadImage();
     }
@@ -18,6 +20,8 @@ export class Sprite {
         this.image.onload = () => {
           this.loaded = true;
           this.frameWidth = this.image.width / this.numFrames;
+          this.width = this.frameWidth * this.#factor;
+          this.height = this.image.height * this.#factor;
         };
         this.image.src = this.url;
     }
@@ -30,17 +34,18 @@ export class Sprite {
     get x() {
         return this.#currentX;
     }
-
-    set x(value) {
-        this.#currentX = value;
-    }
-
+    
     // Getter and setter for y position
     get y() {
         return this.#currentY;
     }
-
+    
+    set x(value) {
+        this.#currentX = value;
+    }
+    
     set y(value) {
         this.#currentY = value;
     }
+
 }
