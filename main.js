@@ -7,7 +7,7 @@ import { Enemy } from './modules/enemy.js'
 let input = new Input();
 let canvas = document.querySelector(".gameCanvas");
 let ctx = canvas.getContext('2d');
-let player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2))
+let player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2), input);
 
 const spawns = [{x: 30, y: 525}, {x: 970, y: 525}, {x: 525, y: 30}, {x: 525, y: 970}]
 
@@ -70,7 +70,7 @@ function draw(){
 }
 
 function update(){
-    player.move(input.playerDirection);
+    player.update();
 
     for (let i = 0; i < enemies.length; i++) {
         const enemy = enemies[i];
@@ -82,6 +82,7 @@ function update(){
         }
     }
 
+    
     for (let i = 0; i < bullets.length; i++) {
         const bullet = bullets[i];
         bullet.update();
@@ -98,6 +99,7 @@ function update(){
             bulletTimer = 0; // Reset the timer
         }
     }
+    
 
     // Spawn enemies
     elapsedTimeSinceSpawn += animationSpeed;
