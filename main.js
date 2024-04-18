@@ -3,8 +3,10 @@ import { Player } from './modules/player.js'
 import { Input } from './modules/input.js'
 import { Bullet } from './modules/bullet.js'
 import { Enemy } from './modules/enemy.js'
+import { Audio } from './modules/audio.js'
 
 let input = new Input();
+let audio = new Audio();
 let canvas = document.querySelector(".gameCanvas");
 let ctx = canvas.getContext('2d');
 let player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2), input);
@@ -35,6 +37,7 @@ function setup(){
     let width = 1000;
     let height = 1000;
     createCanvas(width, height);
+    audio.play(audio.music);
 }
 
 function randomSpawnPoint() {
@@ -77,6 +80,7 @@ function update(){
         enemy.update();
         
         if (enemy.killed) {
+            audio.playRandom(audio.booms);
             enemies.splice(i, 1);
             i--;
         }
@@ -95,6 +99,7 @@ function update(){
 
     if (input.isShooting) {
         if (bulletTimer >= bulletRate) {
+            audio.play(audio.shoot);
             bullets.push(new Bullet(new Sprite('./images/bullet.png', 4), input.gunDirection, player.position));
             bulletTimer = 0; // Reset the timer
         }
