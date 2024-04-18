@@ -14,12 +14,4 @@ export class Player extends Entity {
     update() {
         this.move(this.#input.playerDirection, this.moveSpeed);
     }
-
-    checkBoundaryX() {
-        return super.checkBoundaryX(this.sprite.x, this.sprite.width, 50, 950);
-    }
-
-    checkBoundaryY() {
-        return super.checkBoundaryY(this.sprite.y, this.sprite.height, 50, 950);
-    }
 }

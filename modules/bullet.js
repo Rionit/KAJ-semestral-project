@@ -10,6 +10,7 @@ export class Bullet {
         this.#sprite = sprite;
         this.#direction = direction;
         this.#position = position;
+        console.log(this.#position);
         this.#speed = 5;
         this.#ttl = 250;
     }

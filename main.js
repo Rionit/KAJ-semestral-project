@@ -100,7 +100,7 @@ function update(){
     if (input.isShooting) {
         if (bulletTimer >= bulletRate) {
             audio.play(audio.shoot);
-            bullets.push(new Bullet(new Sprite('./images/bullet.png', 4), input.gunDirection, player.position));
+            bullets.push(new Bullet(new Sprite('./images/bullet.png', 4), input.gunDirection, {...player.position}));
             bulletTimer = 0; // Reset the timer
         }
     }

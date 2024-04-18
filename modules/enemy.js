@@ -25,6 +25,11 @@ export class Enemy extends Entity {
         this.move(this.getDirection(), this.moveSpeed);
     }
 
+    move(dir, speed) {
+        this.position = { x: this.position.x + dir.x * speed, y: this.position.y + dir.y * speed };
+        this.sprite.position = this.position;
+    }
+
     getDirection(){
         const dir = { x: this.#player.position.x - this.position.x, y: this.#player.position.y - this.position.y };
 
