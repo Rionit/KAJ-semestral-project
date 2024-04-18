@@ -8,9 +8,6 @@ export class Entity {
     move(dir, speed) {
         let nextPosition = { x: this.position.x + dir.x * speed, y: this.position.y + dir.y * speed }
 
-        // this.position = { x: this.position.x + dir.x * speed, y: this.position.y + dir.y * speed };
-        // this.sprite.position = this.position;
-
         // Check collisions along the x-axis
         if (this.checkBoundaryX(nextPosition.x)) {
             this.position.x = nextPosition.x;

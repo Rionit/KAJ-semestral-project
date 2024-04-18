@@ -33,7 +33,7 @@ function createCanvas(width, height){
 }
 
 function setup(){
-    enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, 525, 30, true, 2), player, bullets));
+    enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, 525, 30, true, 2), player, bullets, enemies));
     let width = 1000;
     let height = 1000;
     createCanvas(width, height);
@@ -110,7 +110,7 @@ function update(){
     elapsedTimeSinceSpawn += animationSpeed;
     if (elapsedTimeSinceSpawn >= enemySpawnTimer) {
         const spawnPoint = randomSpawnPoint();
-        enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, spawnPoint.x, spawnPoint.y, true, 2), player, bullets));
+        enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, spawnPoint.x, spawnPoint.y, true, 2), player, bullets, enemies));
         elapsedTimeSinceSpawn = 0;
         enemySpawnTimer = randomTime(30000, 60000); // Reset spawn timer for the next enemy
     }
