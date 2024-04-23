@@ -18,7 +18,10 @@ export class Enemy extends Entity {
 
     update() {
         this.#bullets.forEach(bullet => {
-            if (this.checkHit(bullet)) this.#killed = true;
+            if (this.checkHit(bullet)) {
+                this.#killed = true;
+                bullet.destroy();
+            };
         });
 
         if(this.checkHit(this.#player)) this.#player.destroy();
@@ -59,7 +62,7 @@ export class Enemy extends Entity {
     }
 
     checkHit(target) {
-        if (Math.abs(target.x - this.x) < 50 && Math.abs(target.y - this.y) < 50) {
+        if (Math.abs(target.x - this.x) < 40 && Math.abs(target.y - this.y) < 40) {
             return true;
         }
         return false;

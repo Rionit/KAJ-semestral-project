@@ -11,7 +11,11 @@ let canvas = document.querySelector(".gameCanvas");
 let ctx = canvas.getContext('2d');
 let player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2), input);
 
-const spawns = [{x: 30, y: 525}, {x: 970, y: 525}, {x: 525, y: 30}, {x: 525, y: 970}]
+const spawns = [
+    {x: 30, y: 465}, {x: 30, y: 525}, {x: 30, y: 585}, 
+    {x: 970, y: 465}, {x: 970, y: 525}, {x: 970, y: 585}, 
+    {x: 465, y: 30}, {x: 525, y: 30}, {x: 585, y: 30},
+    {x: 465, y: 970}, {x: 525, y: 970}, {x: 585, y: 970}]
 
 let bullets = []
 let enemies = []
@@ -85,7 +89,6 @@ function update(){
             i--;
         }
     }
-
     
     for (let i = 0; i < bullets.length; i++) {
         const bullet = bullets[i];
@@ -104,15 +107,16 @@ function update(){
             bulletTimer = 0; // Reset the timer
         }
     }
-    
 
     // Spawn enemies
     elapsedTimeSinceSpawn += animationSpeed;
     if (elapsedTimeSinceSpawn >= enemySpawnTimer) {
-        const spawnPoint = randomSpawnPoint();
-        enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, spawnPoint.x, spawnPoint.y, true, 2), player, bullets, enemies));
+        for (let e = 0; e < (Math.random() * (3 - 1) + 1); e++) {
+            const spawnPoint = randomSpawnPoint();
+            enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, spawnPoint.x, spawnPoint.y, true, 2), player, bullets, enemies));
+        }
         elapsedTimeSinceSpawn = 0;
-        enemySpawnTimer = randomTime(30000, 60000); // Reset spawn timer for the next enemy
+        enemySpawnTimer = randomTime(5000, 100000); // Reset spawn timer for the next enemy
     }
 
     // Increment the bullet timer
