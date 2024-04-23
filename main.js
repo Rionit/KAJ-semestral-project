@@ -39,10 +39,10 @@ function createCanvas(width, height){
 }
 
 function setup(){
-    enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, 525, 30, true, 2), player, bullets, enemies));
     let width = 1000;
     let height = 1000;
     createCanvas(width, height);
+    
     audio.play(audio.music);
 }
 
@@ -57,25 +57,38 @@ function randomTime(min, max) {
 let enemySpawnTimer = randomTime(3000, 8000); // Initial delay before spawning the first enemy
 let elapsedTimeSinceSpawn = 0;
 
+function drawSprite(sprite, x, y) {
+    if (sprite.animated) {
+        ctx.drawImage(
+            sprite.image,
+            sprite.getFrameX(animFrame),
+            0,
+            sprite.frameWidth,
+            sprite.image.height,
+            x - sprite.width / 2,
+            y - sprite.height / 2,
+            sprite.width,
+            sprite.height
+        );
+    } else {
+        ctx.drawImage(sprite.image, x, y, sprite.width, sprite.height);
+    }
+}
+
+function drawSprites(spriteArray) {
+    for (const item of spriteArray) {
+        drawSprite(item.sprite, item.x, item.y);
+    }
+}
+
 function draw(){
     for (const key in sprites) {
-        const sprite = sprites[key];
-        const { x, y } = sprite;
-
-        if (sprite.animated) {
-            ctx.drawImage(sprite.image, sprite.getFrameX(animFrame), 0, sprite.frameWidth, sprite.image.height, x - (sprite.width / 2), y - (sprite.height / 2), sprite.width, sprite.height);
-        } else {
-            ctx.drawImage(sprite.image, x, y, sprite.width, sprite.height);
-        }
+        const { x, y } = sprites[key];
+        drawSprite(sprites[key], x, y);
     }
 
-    for(const enemy of enemies){
-        ctx.drawImage(enemy.sprite.image, enemy.sprite.getFrameX(animFrame), 0, enemy.sprite.frameWidth, enemy.sprite.image.height, enemy.x - (enemy.sprite.width / 2), enemy.y - (enemy.sprite.height / 2), enemy.sprite.width, enemy.sprite.height);
-    }
-
-    for(const bullet of bullets){
-        ctx.drawImage(bullet.sprite.image, bullet.x, bullet.y, bullet.sprite.width, bullet.sprite.height);
-    }
+    drawSprites(enemies);
+    drawSprites(bullets);
 
     document.querySelector("#score").textContent = `Score: ${score}`
 }
@@ -156,12 +169,11 @@ function animate(){
     }
 }
 
-setup();
-
 const intervalId = setInterval(() => {
     animFrame++;
 }, animationSpeed);
 
 window.onload = function(){
+    setup();
     startAnimating(90);
 };
