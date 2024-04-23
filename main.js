@@ -12,13 +12,13 @@ let ctx = canvas.getContext('2d');
 let player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2), input);
 
 const spawns = [
-    {x: 30, y: 465}, {x: 30, y: 525}, {x: 30, y: 585}, 
-    {x: 970, y: 465}, {x: 970, y: 525}, {x: 970, y: 585}, 
-    {x: 465, y: 30}, {x: 525, y: 30}, {x: 585, y: 30},
-    {x: 465, y: 970}, {x: 525, y: 970}, {x: 585, y: 970}]
+    {x: 30, y: 465}, {x: 30, y: 525}, {x: 30, y: 585},      // WEST
+    {x: 970, y: 465}, {x: 970, y: 525}, {x: 970, y: 585},   // EAST
+    {x: 465, y: 30}, {x: 525, y: 30}, {x: 585, y: 30},      // NORTH
+    {x: 465, y: 970}, {x: 525, y: 970}, {x: 585, y: 970}]   // SOUTH
 
-let bullets = []
-let enemies = []
+let bullets = [];
+let enemies = [];
 
 const sprites = {
     background: new Sprite('./images/background.png'),
@@ -29,6 +29,8 @@ let animFrame = 0;
 let animationSpeed = 400;
 let bulletTimer = 0;
 const bulletRate = 8000; // Interval between bullets in milliseconds
+
+let score = 0;
 
 function createCanvas(width, height){
     // Set canvas width and height
@@ -74,6 +76,8 @@ function draw(){
     for(const bullet of bullets){
         ctx.drawImage(bullet.sprite.image, bullet.x, bullet.y, bullet.sprite.width, bullet.sprite.height);
     }
+
+    document.querySelector("#score").textContent = `Score: ${score}`
 }
 
 function update(){
@@ -84,6 +88,7 @@ function update(){
         enemy.update();
         
         if (enemy.killed) {
+            score++;
             audio.playRandom(audio.booms);
             enemies.splice(i, 1);
             i--;
