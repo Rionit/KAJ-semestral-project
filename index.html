@@ -7,12 +7,23 @@
     <title>KAJ Semestral Project</title>
 </head>
 <body style="background-color:rgb(0, 8, 9);">
-    <canvas class="gameCanvas"></canvas>
+    <div class="arcade">
+        <svg viewBox="0 0 250 1000">
+        <rect width="250" height="1000" fill="gray"></rect>
+        </svg>
+        <canvas class="gameCanvas"></canvas>
+        <svg viewBox="0 0 250 1000">
+        <rect width="250" height="1000" fill="gray"></rect>
+        </svg>
+    </div>
+
     <b id="score" style="color: white">Score: 0</b>
+
     <audio id="backgroundMusic" src="audio/music.mp3" loop></audio>
     <audio id="shootSound" src="audio/shoot.wav"></audio>
     <audio id="boomSound1" src="audio/boom1.wav"></audio>
     <audio id="boomSound2" src="audio/boom2.wav"></audio>
+
     <script type="module" src="main.js"></script>
 </body>
 </html>

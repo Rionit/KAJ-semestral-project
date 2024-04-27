@@ -10,6 +10,7 @@ let audio = new Audio();
 let canvas = document.querySelector(".gameCanvas");
 let ctx = canvas.getContext('2d');
 let player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2), input);
+const titleScreen = new Sprite('./images/title_screen.png');
 
 const spawns = [
     {x: 30, y: 465}, {x: 30, y: 525}, {x: 30, y: 585},      // WEST
@@ -25,6 +26,7 @@ const sprites = {
     player: player.sprite
 };
 
+let isPlaying = false;
 let animFrame = 0;
 let animationSpeed = 400;
 let bulletTimer = 0;
@@ -36,14 +38,17 @@ function createCanvas(width, height){
     // Set canvas width and height
     canvas.width = width;
     canvas.height = height;
+    canvas.addEventListener('mousedown', e => canvas.className = "clicked")
+    document.addEventListener('keypress', e => {
+        if(canvas.className == 'clicked' && !isPlaying) startAnimating(90);
+    })
 }
 
 function setup(){
     let width = 1000;
     let height = 1000;
     createCanvas(width, height);
-    
-    audio.play(audio.music);
+    drawSprite(titleScreen);
 }
 
 function randomSpawnPoint() {
@@ -57,7 +62,7 @@ function randomTime(min, max) {
 let enemySpawnTimer = randomTime(3000, 8000); // Initial delay before spawning the first enemy
 let elapsedTimeSinceSpawn = 0;
 
-function drawSprite(sprite, x, y) {
+function drawSprite(sprite, x=0, y=0) {
     if (sprite.animated) {
         ctx.drawImage(
             sprite.image,
@@ -147,6 +152,7 @@ function startAnimating(fps) {
     fpsInterval = 1000 / fps;
     then = Date.now();
     startTime = then;
+    audio.play(audio.music);
     animate();
 }
 
@@ -175,5 +181,5 @@ const intervalId = setInterval(() => {
 
 window.onload = function(){
     setup();
-    startAnimating(90);
+    // startAnimating(90);
 };
