@@ -33,6 +33,11 @@ export class Input{
                     circle.style.filter = 'drop-shadow(0px 14px 0px rgb(0 0 0 / 1))';
                 }
             }
+
+            if (['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'].includes(e.key)) {
+                // Prevent the default action (scrolling)
+                e.preventDefault();
+            }
         } else {
             console.log("Error: (" + e.key + ") key was not found!");
         }
