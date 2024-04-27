@@ -46,6 +46,42 @@ function createCanvas(width, height){
             startAnimating(90);
         }
     })
+
+
+    canvas.style.filter = 'drop-shadow(0px 0px 100px ' + calculateAverageColor() + ')';
+
+    canvas.addEventListener('animationiteration', e => {
+        canvas.style.filter = 'drop-shadow(0px 0px 100px ' + calculateAverageColor(true) + ')';
+    });
+}
+
+// Function to calculate average color
+function calculateAverageColor(randomOpacity=false) {
+    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    var data = imageData.data;
+    var pixelCount = data.length / 4; // Each pixel takes up 4 bytes (RGBA)
+  
+    var totalRed = 0;
+    var totalGreen = 0;
+    var totalBlue = 0;
+  
+    for (var i = 0; i < data.length; i += 4) {
+      totalRed += data[i];
+      totalGreen += data[i + 1];
+      totalBlue += data[i + 2];
+    }
+  
+    var averageRed = Math.round(totalRed / pixelCount);
+    var averageGreen = Math.round(totalGreen / pixelCount);
+    var averageBlue = Math.round(totalBlue / pixelCount);
+  
+    // Generate a random opacity value between 0.5 and 1
+    var opacity = Math.random() * (1 - 0.5) + 0.5;
+  
+    if(randomOpacity) 
+        return 'rgba(' + averageRed + ',' + averageGreen + ',' + averageBlue + ',' + opacity + ')'; 
+    else 
+        return 'rgb(' + averageRed + ',' + averageGreen + ',' + averageBlue + ')';
 }
 
 function setup(){
