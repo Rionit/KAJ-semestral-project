@@ -40,7 +40,11 @@ function createCanvas(width, height){
     canvas.height = height;
     canvas.addEventListener('mousedown', e => canvas.className = "clicked")
     document.addEventListener('keypress', e => {
-        if(canvas.className == 'clicked' && !isPlaying) startAnimating(90);
+        if(canvas.className == 'clicked' && !isPlaying) 
+        {
+            isPlaying = true;
+            startAnimating(90);
+        }
     })
 }
 
