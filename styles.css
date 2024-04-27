@@ -8,6 +8,7 @@
 }
 
 .arcade .top {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,15 +23,14 @@
 }
 
 .arcade .controls{
-    width: 1500px;
-    height: 400px;
+    max-width: 1500px;
+    max-height: 400px;
     transform: rotateX(10deg);
 }
 
-
 .arcade .bottom{
-    width: 1500px;
-    height: 1400px;
+    max-width: 1500px;
+    max-height: 1400px;
     transform: translateZ(35px);
 }
 
@@ -39,13 +39,15 @@
 }
 
 .arcade .middle svg{
-    width: 250px;
-    height: 1000px;
+    width: 100%;
+    min-height: 1000px;
+    max-width: 250px;
+    max-height: 1000px;
 }
 
 .arcade .top svg{
-    width: 1500px;
-    height: 250px;
+    max-width: 1500px;
+    max-height: 250px;
 }
 
 .arcade canvas {
