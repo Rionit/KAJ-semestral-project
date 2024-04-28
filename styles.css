@@ -5,20 +5,45 @@
     transform-style: preserve-3d;
     perspective: none;
     position: relative;
-    /* transform: rotateY(-45deg); */
-    transform: rotateY(0deg);
+    transform: rotateY(-45deg);
+    /* transform: rotateY(40deg) rotateX(-40deg) translateY(350px); */
     /* animation: rotate-arcade 10s infinite linear; */
 }
 
 @keyframes rotate-arcade {
-    0% { transform: rotateY(0deg) rotateX(0deg);}
-    100% { transform: rotateY(-360deg) rotateX(0deg);}
+    0% { transform: rotateY(0deg) rotateX(0deg); }
+    50% { transform: rotateY(-180deg) rotateX(15deg); }
+    100% { transform: rotateY(-360deg) rotateX(0deg); }
 }
 
-.arcade_side {
+.arcade_top {
     position: absolute;
     width: 1500px;
-    transform: translateX(750px) translateZ(-50px) rotateY(90deg) ;
+    transform: translateY(-1430px) rotateX(90deg);
+}
+
+.arcade_bottom {
+    position: absolute;
+    width: 1500px;
+    transform: translateY(1525px) rotateX(90deg);
+}
+
+.arcade_side_r {
+    position: absolute;
+    width: 1500px;
+    transform: translateX(750px) translateZ(-50px) rotateY(90deg);
+}
+
+.arcade_side_l {
+    position: absolute;
+    width: 1500px;
+    transform: translateX(-750px) translateZ(-50px) rotateY(90deg);
+}
+
+.arcade_back {
+    position: absolute;
+    width: 1500px;
+    transform: translateZ(-800px) translateY(45px);
 }
 
 .arcade_front {
