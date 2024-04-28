@@ -1,63 +1,88 @@
 .arcade {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    perspective: 500px;
-    transform: rotateX(0deg) rotateY(0deg);
+    justify-content: center;
+    transform-style: preserve-3d;
+    perspective: none;
+    position: relative;
+    /* transform: rotateY(-45deg); */
+    transform: rotateY(0deg);
+    /* animation: rotate-arcade 10s infinite linear; */
 }
 
-.arcade .top {
-    width: 100%;
+@keyframes rotate-arcade {
+    0% { transform: rotateY(0deg) rotateX(0deg);}
+    100% { transform: rotateY(-360deg) rotateX(0deg);}
+}
+
+.arcade_side {
+    position: absolute;
+    width: 1500px;
+    transform: translateX(750px) translateZ(-50px) rotateY(90deg) ;
+}
+
+.arcade_front {
+    display: grid;
+    justify-content: center;
+    grid-template-rows: 250px 1000px 400px 1400px;
+    grid-template-columns: 250px 1000px 250px;
+    transform: translateZ(500px);
+    transform-style: preserve-3d;
+}
+
+.arcade_front .top {
+    grid-row: 1;    
+    grid-column: 1 / 4;    
+    transform: rotateX(-30deg) translateZ(-85px) translateY(130px);
+}
+
+.arcade_front .middle {
+    grid-row: 2;    
+    grid-column: 1 / 4;   
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: rotateX(-16deg);
+    transform: translateZ(-200px) translateY(55px);
 }
 
-.arcade .middle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: translateZ(-35px);
-}
-
-.arcade .controls{
-    z-index: -999; /* just for glow */
+.arcade_front .controls{
+    grid-row: 3;    
+    grid-column: 1 / 4;  
     max-width: 1500px;
     max-height: 400px;
-    transform: rotateX(10deg);
+    transform: rotateX(30deg) translateZ(-100px) translateY(-25px);
 }
 
-.arcade .bottom{
+.arcade_front .bottom{
+    grid-row: 4;    
+    grid-column: 1 / 4;  
     max-width: 1500px;
     max-height: 1400px;
-    transform: translateZ(35px);
 }
 
-.arcade svg{
+.arcade_front svg{
     background: lightblue;
 }
 
-.arcade .middle svg{
+.arcade_front .middle svg{
     width: 100%;
     min-height: 1000px;
     max-width: 250px;
     max-height: 1000px;
 }
 
-.arcade .top svg{
+.arcade_front .top svg{
     max-width: 1500px;
     max-height: 250px;
 }
 
-.arcade canvas {
+.arcade_front canvas {
     max-width: 100%;
     animation: flicker 0.4s infinite alternate;   
     transition: all 0.4s;
 }
 
-.arcade .star {
+.arcade_front .star {
     fill: #ffff6e;
     filter: drop-shadow(0px 0px 50px rgba(255, 234, 0, 0.7));
 }
@@ -66,7 +91,6 @@
 circle {
     transition: all 0.3s;
     filter: drop-shadow(0px 14px 0px rgb(0 0 0 / 1));
-    transform: translateY(-7px);
 }
 
 @keyframes flicker {
