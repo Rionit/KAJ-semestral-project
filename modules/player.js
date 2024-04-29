@@ -1,17 +1,17 @@
 import { Entity } from './entity.js';
 
 export class Player extends Entity {
-    #input;
+    #game;
 
-    constructor(sprite, input) {
+    constructor(sprite, game) {
         super();
-        this.#input = input;
+        this.#game = game;
         this.sprite = sprite;
         this.position = {x: 525, y: 525};
         this.moveSpeed = 4;
     }
 
     update() {
-        this.move(this.#input.playerDirection, this.moveSpeed);
+        this.move(this.#game.playerDirection, this.moveSpeed);
     }
 }

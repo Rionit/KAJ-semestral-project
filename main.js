@@ -1,225 +1,215 @@
-import { Sprite } from './modules/sprites.js'
-import { Player } from './modules/player.js'
-import { Input } from './modules/input.js'
-import { Bullet } from './modules/bullet.js'
-import { Enemy } from './modules/enemy.js'
-import { Audio } from './modules/audio.js'
+import { Sprite } from './modules/sprites.js';
+import { Player } from './modules/player.js';
+import { Input } from './modules/input.js';
+import { Bullet } from './modules/bullet.js';
+import { Enemy } from './modules/enemy.js';
+import { Audio } from './modules/audio.js';
+import { Leaderboard } from './modules/leaderboard.js';
 
-let input = new Input();
-let audio = new Audio();
-let canvas = document.querySelector(".gameCanvas");
-let ctx = canvas.getContext('2d');
-let player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2), input);
-const titleScreen = new Sprite('./images/title_screen.png');
+class Game {
+    constructor() {
+        this.input = new Input();
+        this.audio = new Audio();
+        this.leaderboard = new Leaderboard();
+        this.canvas = document.querySelector(".gameCanvas");
+        this.ctx = this.canvas.getContext('2d');
+        this.player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2), this.input);
+        this.titleScreen = new Sprite('./images/title_screen.png');
 
-const spawns = [
-    {x: 30, y: 465}, {x: 30, y: 525}, {x: 30, y: 585},      // WEST
-    {x: 970, y: 465}, {x: 970, y: 525}, {x: 970, y: 585},   // EAST
-    {x: 465, y: 30}, {x: 525, y: 30}, {x: 585, y: 30},      // NORTH
-    {x: 465, y: 970}, {x: 525, y: 970}, {x: 585, y: 970}]   // SOUTH
+        this.spawns = [
+            {x: 30, y: 465}, {x: 30, y: 525}, {x: 30, y: 585},      // WEST
+            {x: 970, y: 465}, {x: 970, y: 525}, {x: 970, y: 585},   // EAST
+            {x: 465, y: 30}, {x: 525, y: 30}, {x: 585, y: 30},      // NORTH
+            {x: 465, y: 970}, {x: 525, y: 970}, {x: 585, y: 970}    // SOUTH
+        ];
 
-let bullets = [];
-let enemies = [];
+        this.bullets = [];
+        this.enemies = [];
 
-const sprites = {
-    background: new Sprite('./images/background.png'),
-    player: player.sprite
-};
+        this.sprites = {
+            background: new Sprite('./images/background.png'),
+            player: this.player.sprite
+        };
 
-let isPlaying = false;
-let animFrame = 0;
-let animationSpeed = 400;
-let bulletTimer = 0;
-const bulletRate = 8000; // Interval between bullets in milliseconds
+        this.isPlaying = false;
+        this.animFrame = 0;
+        this.animationSpeed = 400;
+        this.bulletTimer = 0;
+        this.bulletRate = 8000; // Interval between bullets in milliseconds
 
-let score = 0;
+        this.score = 0;
 
-function createCanvas(width, height){
-    // Set canvas width and height
-    canvas.width = width;
-    canvas.height = height;
-    canvas.addEventListener('mousedown', e => canvas.className = "clicked")
-    document.addEventListener('keypress', e => {
-        if(canvas.className == 'clicked' && !isPlaying) 
-        {
-            isPlaying = true;
-            startAnimating(90);
+        this.enemySpawnTimer = this.randomTime(3000, 8000); // Initial delay before spawning the first enemy
+        this.elapsedTimeSinceSpawn = 0;
+
+        this.setup();
+    }
+
+    setup() {
+        let width = 1000;
+        let height = 1000;
+        this.createCanvas(width, height);
+        this.drawSprite(this.titleScreen);
+    }
+
+    createCanvas(width, height) {
+        // Set canvas width and height
+        this.canvas.width = width;
+        this.canvas.height = height;
+        this.canvas.addEventListener('mousedown', e => this.canvas.className = "clicked");
+        document.addEventListener('keypress', e => {
+            if (this.canvas.className == 'clicked' && !this.isPlaying) {
+                this.isPlaying = true;
+                this.startAnimating(90);
+            }
+        });
+
+        this.canvas.style.filter = 'drop-shadow(0px 0px 100px ' + this.calculateAverageColor() + ')';
+
+        this.canvas.addEventListener('animationiteration', e => {
+            this.canvas.style.filter = 'drop-shadow(0px 0px 100px ' + this.calculateAverageColor(true) + ')';
+        });
+    }
+
+    calculateAverageColor(randomOpacity=false) {
+        var imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        var data = imageData.data;
+        var pixelCount = data.length / 4; // Each pixel takes up 4 bytes (RGBA)
+
+        var totalRed = 0;
+        var totalGreen = 0;
+        var totalBlue = 0;
+
+        for (var i = 0; i < data.length; i += 4) {
+            totalRed += data[i];
+            totalGreen += data[i + 1];
+            totalBlue += data[i + 2];
         }
-    })
 
+        var averageRed = Math.round(totalRed / pixelCount);
+        var averageGreen = Math.round(totalGreen / pixelCount);
+        var averageBlue = Math.round(totalBlue / pixelCount);
 
-    canvas.style.filter = 'drop-shadow(0px 0px 100px ' + calculateAverageColor() + ')';
+        var opacity = Math.random() * (1 - 0.5) + 0.5;
 
-    canvas.addEventListener('animationiteration', e => {
-        canvas.style.filter = 'drop-shadow(0px 0px 100px ' + calculateAverageColor(true) + ')';
-    });
-}
-
-// Function to calculate average color
-function calculateAverageColor(randomOpacity=false) {
-    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    var data = imageData.data;
-    var pixelCount = data.length / 4; // Each pixel takes up 4 bytes (RGBA)
-  
-    var totalRed = 0;
-    var totalGreen = 0;
-    var totalBlue = 0;
-  
-    for (var i = 0; i < data.length; i += 4) {
-      totalRed += data[i];
-      totalGreen += data[i + 1];
-      totalBlue += data[i + 2];
-    }
-  
-    var averageRed = Math.round(totalRed / pixelCount);
-    var averageGreen = Math.round(totalGreen / pixelCount);
-    var averageBlue = Math.round(totalBlue / pixelCount);
-  
-    // Generate a random opacity value between 0.5 and 1
-    var opacity = Math.random() * (1 - 0.5) + 0.5;
-  
-    if(randomOpacity) 
-        return 'rgba(' + averageRed + ',' + averageGreen + ',' + averageBlue + ',' + opacity + ')'; 
-    else 
-        return 'rgb(' + averageRed + ',' + averageGreen + ',' + averageBlue + ')';
-}
-
-function setup(){
-    let width = 1000;
-    let height = 1000;
-    createCanvas(width, height);
-    drawSprite(titleScreen);
-}
-
-function randomSpawnPoint() {
-    return spawns[Math.floor(Math.random() * spawns.length)];
-}
-
-function randomTime(min, max) {
-    return Math.random() * (max - min) + min;
-}
-
-let enemySpawnTimer = randomTime(3000, 8000); // Initial delay before spawning the first enemy
-let elapsedTimeSinceSpawn = 0;
-
-function drawSprite(sprite, x=0, y=0) {
-    if (sprite.animated) {
-        ctx.drawImage(
-            sprite.image,
-            sprite.getFrameX(animFrame),
-            0,
-            sprite.frameWidth,
-            sprite.image.height,
-            x - sprite.width / 2,
-            y - sprite.height / 2,
-            sprite.width,
-            sprite.height
-        );
-    } else {
-        ctx.drawImage(sprite.image, x, y, sprite.width, sprite.height);
-    }
-}
-
-function drawSprites(spriteArray) {
-    for (const item of spriteArray) {
-        drawSprite(item.sprite, item.x, item.y);
-    }
-}
-
-function draw(){
-    for (const key in sprites) {
-        const { x, y } = sprites[key];
-        drawSprite(sprites[key], x, y);
+        if (randomOpacity) 
+            return 'rgba(' + averageRed + ',' + averageGreen + ',' + averageBlue + ',' + opacity + ')'; 
+        else 
+            return 'rgb(' + averageRed + ',' + averageGreen + ',' + averageBlue + ')';
     }
 
-    drawSprites(enemies);
-    drawSprites(bullets);
+    randomSpawnPoint() {
+        return this.spawns[Math.floor(Math.random() * this.spawns.length)];
+    }
 
-    document.querySelector("#score").textContent = `Score: ${score}`
-}
+    randomTime(min, max) {
+        return Math.random() * (max - min) + min;
+    }
 
-function update(){
-    player.update();
+    drawSprite(sprite, x=0, y=0) {
+        if (sprite.animated) {
+            this.ctx.drawImage(
+                sprite.image,
+                sprite.getFrameX(this.animFrame),
+                0,
+                sprite.frameWidth,
+                sprite.image.height,
+                x - sprite.width / 2,
+                y - sprite.height / 2,
+                sprite.width,
+                sprite.height
+            );
+        } else {
+            this.ctx.drawImage(sprite.image, x, y, sprite.width, sprite.height);
+        }
+    }
 
-    for (let i = 0; i < enemies.length; i++) {
-        const enemy = enemies[i];
-        enemy.update();
+    drawSprites(spriteArray) {
+        for (const item of spriteArray) {
+            this.drawSprite(item.sprite, item.x, item.y);
+        }
+    }
+
+    draw() {
+        for (const key in this.sprites) {
+            const { x, y } = this.sprites[key];
+            this.drawSprite(this.sprites[key], x, y);
+        }
+
+        this.drawSprites(this.enemies);
+        this.drawSprites(this.bullets);
+
+        document.querySelector("#score").textContent = `Score: ${this.score}`;
+    }
+
+    update() {
+        this.player.update();
+
+        for (let i = 0; i < this.enemies.length; i++) {
+            const enemy = this.enemies[i];
+            enemy.update();
+
+            if (enemy.killed) {
+                this.score++;
+                this.audio.playRandom(this.audio.booms);
+                this.enemies.splice(i, 1);
+                i--;
+            }
+        }
+
+        for (let i = 0; i < this.bullets.length; i++) {
+            const bullet = this.bullets[i];
+            bullet.update();
+
+            if (bullet.destroyed) {
+                this.bullets.splice(i, 1);
+                i--;
+            }
+        }
+
+        if (this.input.isShooting) {
+            if (this.bulletTimer >= this.bulletRate) {
+                this.audio.play(this.audio.shoot);
+                this.bullets.push(new Bullet(new Sprite('./images/bullet.png', 4), this.input.gunDirection, {...this.player.position}));
+                this.bulletTimer = 0;
+            }
+        }
+
+        this.elapsedTimeSinceSpawn += this.animationSpeed;
+        if (this.elapsedTimeSinceSpawn >= this.enemySpawnTimer) {
+            for (let e = 0; e < (Math.random() * (3 - 1) + 1); e++) {
+                const spawnPoint = this.randomSpawnPoint();
+                this.enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, spawnPoint.x, spawnPoint.y, true, 2), this.player, this.bullets, this.enemies));
+            }
+            this.elapsedTimeSinceSpawn = 0;
+            this.enemySpawnTimer = this.randomTime(5000, 100000);
+        }
+
+        this.bulletTimer += this.animationSpeed;
+    }
+
+    startAnimating(fps) {
+        let fpsInterval = 1000 / fps;
+        let then = Date.now();
+        let startTime = then;
+        this.audio.play(this.audio.music);
         
-        if (enemy.killed) {
-            score++;
-            audio.playRandom(audio.booms);
-            enemies.splice(i, 1);
-            i--;
-        }
-    }
-    
-    for (let i = 0; i < bullets.length; i++) {
-        const bullet = bullets[i];
-        bullet.update();
-        
-        if (bullet.destroyed) {
-            bullets.splice(i, 1);
-            i--;
-        }
-    }
+        const animate = () => {
+            requestAnimationFrame(animate);
 
-    if (input.isShooting) {
-        if (bulletTimer >= bulletRate) {
-            audio.play(audio.shoot);
-            bullets.push(new Bullet(new Sprite('./images/bullet.png', 4), input.gunDirection, {...player.position}));
-            bulletTimer = 0; // Reset the timer
-        }
-    }
+            let now = Date.now();
+            let elapsed = now - then;
 
-    // Spawn enemies
-    elapsedTimeSinceSpawn += animationSpeed;
-    if (elapsedTimeSinceSpawn >= enemySpawnTimer) {
-        for (let e = 0; e < (Math.random() * (3 - 1) + 1); e++) {
-            const spawnPoint = randomSpawnPoint();
-            enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, spawnPoint.x, spawnPoint.y, true, 2), player, bullets, enemies));
-        }
-        elapsedTimeSinceSpawn = 0;
-        enemySpawnTimer = randomTime(5000, 100000); // Reset spawn timer for the next enemy
-    }
+            if (elapsed > fpsInterval) {
+                then = now - (elapsed % fpsInterval);
+                this.update();
+                this.draw();
+            }
+        };
 
-    // Increment the bullet timer
-    bulletTimer += animationSpeed;
-}
-
-var fps, fpsInterval, startTime, now, then, elapsed;
-
-function startAnimating(fps) {
-    fpsInterval = 1000 / fps;
-    then = Date.now();
-    startTime = then;
-    audio.play(audio.music);
-    animate();
-}
-
-function animate(){
-    // request another frame
-    requestAnimationFrame(animate);
-
-    // calc elapsed time since last loop
-    now = Date.now();
-    elapsed = now - then;
-
-    // if enough time has elapsed, draw the next frame
-    if (elapsed > fpsInterval) {
-
-        then = now - (elapsed % fpsInterval);
-
-        update();
-        draw();
-
+        animate();
     }
 }
 
-const intervalId = setInterval(() => {
-    animFrame++;
-}, animationSpeed);
-
-window.onload = function(){
-    setup();
-    // startAnimating(90);
-};
+const game = new Game();
+window.onload = () => game.setup();

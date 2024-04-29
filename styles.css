@@ -5,7 +5,7 @@
     transform-style: preserve-3d;
     perspective: none;
     position: relative;
-    transform: rotateY(-45deg);
+    /* transform: rotateY(-90deg); */
     /* transform: rotateY(40deg) rotateX(-40deg) translateY(350px); */
     /* animation: rotate-arcade 10s infinite linear; */
 }
@@ -129,3 +129,20 @@ circle {
      
     }
   }
+
+/* Leaderboard */
+table {
+    border-collapse: collapse;
+    position: absolute;
+    max-width: 1000px;
+    transform: translateY(-2500px) translateX(450px);
+    width: 100%;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
