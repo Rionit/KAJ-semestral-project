@@ -13,7 +13,7 @@ class Game {
         this.leaderboard = new Leaderboard();
         this.canvas = document.querySelector(".gameCanvas");
         this.ctx = this.canvas.getContext('2d');
-        this.player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2), this.input);
+        this.player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2), this);
         this.titleScreen = new Sprite('./images/title_screen.png');
 
         this.spawns = [
@@ -50,6 +50,18 @@ class Game {
         let height = 1000;
         this.createCanvas(width, height);
         this.drawSprite(this.titleScreen);
+    }
+
+    restart() {
+        // Reset score to zero
+        this.score = 0;
+
+        // Delete all enemies
+        this.enemies = [];
+
+        // Put player in the center
+        this.player.position.x = this.canvas.width / 2;
+        this.player.position.y = this.canvas.height / 2;
     }
 
     createCanvas(width, height) {

@@ -32,7 +32,7 @@ export class Entity {
     }
 
     destroy() {
-        location.reload();
+        // location.reload();
     }
 
     get x() {

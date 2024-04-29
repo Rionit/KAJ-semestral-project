@@ -32,6 +32,6 @@ export class Leaderboard {
     addPlayer(name, score) {
         this.leaderboardData.push({ name, score });
         this.leaderboardData.sort((a, b) => b.score - a.score); // Sort players by score
-        renderLeaderboard();
+        this.renderLeaderboard();
     }
 }

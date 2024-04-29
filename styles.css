@@ -5,7 +5,7 @@
     transform-style: preserve-3d;
     perspective: none;
     position: relative;
-    /* transform: rotateY(-90deg); */
+    transform: rotateY(-60deg);
     /* transform: rotateY(40deg) rotateX(-40deg) translateY(350px); */
     /* animation: rotate-arcade 10s infinite linear; */
 }
