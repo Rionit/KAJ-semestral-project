@@ -5,7 +5,6 @@ export class Player extends Entity {
 
     constructor(sprite, game) {
         super();
-        console.log(game);
         this.#game = game;
         this.sprite = sprite;
         this.position = {x: 525, y: 525};
