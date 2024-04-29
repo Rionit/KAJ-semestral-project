@@ -26,12 +26,24 @@ export class Arcade {
         this.arcade.style.transform = `scale(${scale}) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) translateX(${translateX}) translateY(${translateY}) translateZ(${translateZ})`;
     }
 
-    startAnimating(){
-        this.animationID = setInterval(() => {
+    animation(){
+        let len;
+        if(this.transform.rotateY != -30) {
+            this.arcade.style.transition = "all 0s linear";
+            this.transform.rotateY = -30;
+            len = 0;
+        }else{
             this.arcade.style.transition = "all 10s linear";
             this.transform.rotateY += -360;
-            this.applyTransform();
-        }, 10000);
+            len = 10000;
+        }
+        this.applyTransform();
+        clearInterval(this.animationID);
+        this.animationID = setInterval(this.animation.bind(this), len);
+    }
+
+    startAnimating(){
+        this.animationID = setInterval(this.animation.bind(this), 10000);
     }
     
     stopAnimating(){
