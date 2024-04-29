@@ -102,8 +102,6 @@ class Game {
             }
         });
 
-        this.canvas.style.filter = 'drop-shadow(0px 0px 100px ' + this.calculateAverageColor() + ')';
-
         this.canvas.addEventListener('animationiteration', e => {
             this.canvas.style.filter = 'drop-shadow(0px 0px 100px ' + this.calculateAverageColor(true) + ')';
         });
