@@ -18,6 +18,17 @@ export class Arcade {
         this.applyTransform();
 
         this.arcade.addEventListener("click", this.handleArcadeClick.bind(this));
+
+        // this.arcade.addEventListener('mousemove', e => {
+        //     if(!this.isExpanded)
+        //         this.arcade.style.cursor = 'zoom-in';
+        //     else 
+        //         this.arcade.style.cursor = 'zoom-out';
+        // });
+
+        // this.arcade.addEventListener('mouseout', e => {
+        //     this.arcade.style.cursor = 'default';
+        // });
     }
 
     applyTransform(){

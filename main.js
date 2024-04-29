@@ -94,16 +94,26 @@ class Game {
         // Set canvas width and height
         this.canvas.width = width;
         this.canvas.height = height;
+
         this.canvas.addEventListener('mousedown', e => this.canvas.className = "clicked");
+
+        this.canvas.addEventListener('mouseover', e => {
+            this.canvas.style.cursor = 'pointer';
+        });
+
+        this.canvas.addEventListener('mouseout', e => {
+            this.canvas.style.cursor = 'default';
+        });
+
+        this.canvas.addEventListener('animationiteration', e => {
+            this.canvas.style.filter = 'drop-shadow(0px 0px 100px ' + this.calculateAverageColor(true) + ')';
+        });
+   
         document.addEventListener('keypress', e => {
             if (this.canvas.className == 'clicked' && !this.isPlaying) {
                 this.isPlaying = true;
                 this.startAnimating(90);
             }
-        });
-
-        this.canvas.addEventListener('animationiteration', e => {
-            this.canvas.style.filter = 'drop-shadow(0px 0px 100px ' + this.calculateAverageColor(true) + ')';
         });
     }
 

@@ -58,6 +58,9 @@
 .arcade_front .top {
     grid-row: 1;    
     grid-column: 1 / 4;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transform: rotateX(-30deg) translateZ(-85px) translateY(130px);
 }
 
@@ -110,6 +113,15 @@
 .arcade_front .star {
     fill: #ffff6e;
     filter: drop-shadow(0px 0px 50px rgba(255, 234, 0, 0.7));
+}
+
+#score {
+    font-family: 'ArcadeClassic', sans-serif;
+    position: absolute;
+    color: #ffff6e;
+    filter: drop-shadow(0px 0px 50px rgba(255, 234, 0, 0.7));
+    font-size: 150px;
+    white-space: nowrap;
 }
 
 /* BUTTONS */
