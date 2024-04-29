@@ -31,6 +31,7 @@ class Game {
             player: this.player.sprite
         };
 
+        this.intervalId = null; 
         this.isPlaying = false;
         this.animFrame = 0;
         this.animationSpeed = 400;
@@ -52,16 +53,39 @@ class Game {
         this.drawSprite(this.titleScreen);
     }
 
+    gameOver() {
+
+        this.pauseAnimating();
+
+        const playerName = prompt("Game Over! Enter your name:");
+
+        if (playerName && playerName.trim() !== "") {
+            this.leaderboard.addPlayer(playerName, this.score);
+            this.restart();
+        } else {
+            alert("Please enter a valid name.");
+            this.gameOver();
+        }
+    }
+
     restart() {
         // Reset score to zero
         this.score = 0;
 
-        // Delete all enemies
+        // Delete all enemies and bullets
         this.enemies = [];
+        this.bullets = [];
+
+        // Reset input
+        this.input.reset();
 
         // Put player in the center
         this.player.position.x = this.canvas.width / 2;
         this.player.position.y = this.canvas.height / 2;
+
+        this.intervalId = setInterval(() => {
+            this.animFrame++;
+        }, this.animationSpeed);
     }
 
     createCanvas(width, height) {
@@ -200,6 +224,10 @@ class Game {
         this.bulletTimer += this.animationSpeed;
     }
 
+    pauseAnimating() {
+        clearInterval(this.intervalId);
+    }
+
     startAnimating(fps) {
         let fpsInterval = 1000 / fps;
         let then = Date.now();
@@ -218,6 +246,10 @@ class Game {
                 this.draw();
             }
         };
+
+        this.intervalId = setInterval(() => {
+            this.animFrame++;
+        }, this.animationSpeed);
 
         animate();
     }

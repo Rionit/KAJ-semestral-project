@@ -12,6 +12,16 @@ export class Input{
         document.addEventListener('keyup', this.handleKeyEvent.bind(this));
     }
 
+    reset(){
+        for (let key in this.#pressedKeys) {
+            this.#pressedKeys[key] = false;
+        }
+        this.#isShooting = false;
+        this.#isMoving = false;
+        this.#gunDirection = { x: 0, y: 0 };
+        this.#playerDirection = { x: 0, y: 0 };
+    }
+
     handleKeyEvent(e) {
         const key = e.key;
         if (key in this.#pressedKeys) {

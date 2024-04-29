@@ -13,8 +13,7 @@ export class Player extends Entity {
     }
 
     destroy(){
-        this.#game.leaderboard.addPlayer("koko", this.#game.score);
-        this.#game.restart();
+        this.#game.gameOver();
     }
 
     update() {
