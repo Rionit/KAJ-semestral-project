@@ -5,15 +5,15 @@
     transform-style: preserve-3d;
     perspective: none;
     position: relative;
-    transform: rotateY(-60deg);
-    /* transform: rotateY(40deg) rotateX(-40deg) translateY(350px); */
+    transition: all 0.5s;
+    transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
     /* animation: rotate-arcade 10s infinite linear; */
 }
 
 @keyframes rotate-arcade {
-    0% { transform: rotateY(0deg) rotateX(0deg); }
-    50% { transform: rotateY(-180deg) rotateX(15deg); }
-    100% { transform: rotateY(-360deg) rotateX(0deg); }
+    0% { transform: scale(0.6) rotateY(0deg) rotateX(0deg); }
+    50% { transform: scale(0.6) rotateY(-180deg) rotateX(15deg); }
+    100% { transform: scale(0.6) rotateY(-360deg) rotateX(0deg); }
 }
 
 .arcade_top {
