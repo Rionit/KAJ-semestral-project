@@ -116,12 +116,18 @@
 }
 
 #score {
-    font-family: 'ArcadeClassic', sans-serif;
+    font-family: 'GraphicPixel', sans-serif;
     position: absolute;
     color: #ffff6e;
     filter: drop-shadow(0px 0px 50px rgba(255, 234, 0, 0.7));
-    font-size: 150px;
+    font-size: 120px;
+    letter-spacing: 5px;
+    text-shadow: -2px 0 0 #fdff2a,
+    -4px 0 0 #df4a42,
+    2px 0 0 #91fcfe,
+    4px 0 0 #4405fc;
     white-space: nowrap;
+    text-align: center;
 }
 
 /* BUTTONS */
