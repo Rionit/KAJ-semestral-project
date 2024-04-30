@@ -8,17 +8,17 @@
     <title>KAJ Semestral Project</title>
 </head>
 <body style="background-color:rgb(0, 8, 9);">
-    <div class="arcade">
-        <div class="arcade_front">
-    
-            <div class="top">
+    <section class="arcade">
+        <article class="arcade_front">
+
+            <header class="top">
                 <svg class="header" viewBox="0 0 1500 250">
                     <rect width="100%" height="100%" fill="#984C39"></rect>
                 </svg>
                 <b id="score">Score: 0</b>
-            </div>
-    
-            <div class="middle">
+            </header>
+
+            <section class="middle">
                 <svg viewBox="0 0 250 1000">
                     <rect width="250" height="1000" fill="#6f382a"></rect>
                 </svg>
@@ -26,42 +26,44 @@
                 <svg viewBox="0 0 250 1000">
                     <rect width="250" height="1000" fill="#6f382a"></rect>
                 </svg>
-            </div>
-    
-            <svg class="controls" viewBox="0 0 1500 400">
-                <rect width="100%" height="100%" fill="#984C39"></rect>
-                
-                <circle class="leftBtn" cx="250" cy="250" r="50" fill="aqua" stroke="black" stroke-width="5"></circle>
-                <circle class="upBtn" cx="400" cy="100" r="50" fill="lightgreen" stroke="black" stroke-width="5"></circle>
-                <circle class="downBtn" cx="400" cy="250" r="50" fill="yellow" stroke="black" stroke-width="5"></circle>
-                <circle class="rightBtn" cx="550" cy="250" r="50" fill="red" stroke="black" stroke-width="5"></circle>
-    
-            </svg>
-    
-            <svg class="bottom" viewBox="0 0 1500 1400">
-                <rect width="100%" height="100%" fill="#6f382a"></rect>
-    
-                <polygon class="star" points="
-                    1000,500 750,100 500,500 
-                    100,650 450,800 
-                    200,1300 750,1000 1300,1300
-                    1050,800 1400,650
-                    "/>
-            </svg>
-        </div>
+            </section>
 
-        <div class="arcade_side_l">
-            <svg class="header" viewBox="0 0 1500 3050">
+            <nav class="controls">
+                <svg viewBox="0 0 1500 400">
+                    <rect width="100%" height="100%" fill="#984C39"></rect>
+                    
+                    <circle class="leftBtn" cx="250" cy="250" r="50" fill="aqua" stroke="black" stroke-width="5"></circle>
+                    <circle class="upBtn" cx="400" cy="100" r="50" fill="lightgreen" stroke="black" stroke-width="5"></circle>
+                    <circle class="downBtn" cx="400" cy="250" r="50" fill="yellow" stroke="black" stroke-width="5"></circle>
+                    <circle class="rightBtn" cx="550" cy="250" r="50" fill="red" stroke="black" stroke-width="5"></circle>
+                </svg>
+            </nav>
+
+            <footer class="bottom">
+                <svg viewBox="0 0 1500 1400">
+                    <rect width="100%" height="100%" fill="#6f382a"></rect>
+                    <polygon class="star" points="
+                        1000,500 750,100 500,500 
+                        100,650 450,800 
+                        200,1300 750,1000 1300,1300
+                        1050,800 1400,650
+                        "/>
+                </svg>
+            </footer>
+        </article>
+
+        <aside class="arcade_side_l">
+            <svg viewBox="0 0 1500 3050">
                 <!-- <rect width="100%" height="100%" fill="#984C39"></rect> -->
                 <polygon points="
                 275,90 1500,90 1500,3050 200,3050
                 200,1650 400,1310 400,310" 
                 fill="#5c2f23"></polygon>
             </svg>
-        </div>
+        </aside>
 
-        <div class="arcade_side_r">
-            <svg class="header" viewBox="0 0 1500 3050">
+        <aside class="arcade_side_r">
+            <svg viewBox="0 0 1500 3050">
                 <polygon points="
                 275,90 1500,90 1500,3050 200,3050
                 200,1650 400,1310 400,310" 
@@ -79,26 +81,26 @@
                     <!-- Table body will be populated dynamically -->
                 </tbody>
             </table>
-        </div> 
+        </aside> 
         
-        <div class="arcade_back">
-            <svg class="header" viewBox="0 0 1500 2970">
+        <aside class="arcade_back">
+            <svg viewBox="0 0 1500 2970">
                 <rect width="100%" height="100%" fill="#25130e"></rect>
             </svg>
-        </div> 
+        </aside> 
 
-        <div class="arcade_top">
-            <svg class="header" viewBox="0 360 1410 1500">
+        <aside class="arcade_top">
+            <svg viewBox="0 360 1410 1500">
                 <rect width="100%" height="100%" fill="#b95f46"></rect>
             </svg>
-        </div>
+        </aside>
         
-        <div class="arcade_bottom">
-            <svg class="header" viewBox="0 280 1400 1500">
+        <aside class="arcade_bottom">
+            <svg viewBox="0 280 1400 1500">
                 <rect width="100%" height="100%" fill="#120907"></rect>
             </svg>
-        </div>
-    </div>
+        </aside>
+    </section>
 
     <audio id="backgroundMusic" src="audio/music.mp3" loop></audio>
     <audio id="shootSound" src="audio/shoot.wav"></audio>
