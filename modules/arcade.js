@@ -19,6 +19,20 @@ export class Arcade {
 
         this.arcade.addEventListener("click", this.handleArcadeClick.bind(this));
 
+        window.addEventListener('popstate', event => {
+            const state = event.state;
+            if (state && state.expanded !== undefined) {
+                if (state.expanded) {
+                    this.expand();
+                } else {
+                    this.collapse();
+                }
+            } else if (state && state.angle !== undefined){
+                this.transform.rotateY = state.angle;
+            }
+            this.applyTransform();
+        });
+
         // this.arcade.addEventListener('mousemove', e => {
         //     if(!this.isExpanded)
         //         this.arcade.style.cursor = 'zoom-in';
@@ -62,39 +76,50 @@ export class Arcade {
         clearInterval(this.animationID);
     }
 
-    handleArcadeClick(event) {
+    expand() {
+        this.stopAnimating();
+        this.transform.scale = 1;
+        this.transform.rotateX = 0;
+        this.transform.rotateY = 0;
+        this.isExpanded = true;
+    }
 
-        if(event.target == document.querySelector('canvas') && this.isExpanded){
+    collapse() {
+        this.isExpanded = false;
+        this.transform.scale = .6;
+        this.transform.rotateX = -30;
+        this.transform.rotateY = -30;
+    }
+
+    handleArcadeClick(event) {
+        // Check if the click is on the canvas and the arcade is expanded
+        if (event.target == document.querySelector('canvas') && this.isExpanded) {
             return;
         }
-
-        if (!this.isExpanded) {
-            // console.log('EXPANDING');
-            this.stopAnimating();
-            this.transform.scale = 1;
-            this.transform.rotateX = 0;
-            this.transform.rotateY = 0;
-            this.isExpanded = true;
-        } else {
-            const boundingRect = this.arcade.getBoundingClientRect();
-            const middleX = boundingRect.left + boundingRect.width / 2;
-
-            if (Math.abs(middleX - event.clientX) < 250) {
-                // console.log('MIDDLE');
-                this.isExpanded = false;
-                this.transform.scale = .6;
-                this.transform.rotateX = -30;
-                this.transform.rotateY = -30;
-                this.startAnimating();
-            } else if (event.clientX > middleX) {
-                // console.log('RIGHT');
-                this.transform.rotateY += -90;
+    
+        // Check if the click is on the middle of the arcade
+        const boundingRect = this.arcade.getBoundingClientRect();
+        const middleX = boundingRect.left + boundingRect.width / 2;
+    
+        if (Math.abs(middleX - event.clientX) < 250) {
+            if (!this.isExpanded) {
+                this.expand();
+                history.pushState({ expanded: true }, null, '#expanded');
             } else {
-                // console.log('LEFT');
-                this.transform.rotateY += 90;
+                this.collapse();
+                history.pushState({ expanded: false }, null, '#collapsed');
             }
+        } else if (event.clientX > middleX) {
+            // Rotate right
+            this.transform.rotateY += -90;
+            history.pushState({ angle: this.transform.rotateY }, null, `#rotate${this.transform.rotateY}`);
+        } else {
+            // Rotate left
+            this.transform.rotateY += 90;
+            history.pushState({ angle: this.transform.rotateY }, null, `#rotate${this.transform.rotateY}`);
         }
-
+    
         this.applyTransform();
     }
+    
 }
