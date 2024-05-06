@@ -110,13 +110,21 @@ class Game {
         this.canvas.addEventListener('animationiteration', e => {
             this.canvas.style.filter = 'drop-shadow(0px 0px 100px ' + this.calculateAverageColor(true) + ')';
         });
+
+        this.canvas.addEventListener('click', e => {
+            this.handleKeyOrClick(e);
+        });
    
         document.addEventListener('keypress', e => {
-            if (this.canvas.className == 'clicked' && !this.isPlaying) {
-                this.isPlaying = true;
-                this.startAnimating(90);
-            }
+            this.handleKeyOrClick(e);
         });
+    }
+
+    handleKeyOrClick(e){
+        if (!this.isPlaying) {
+            this.isPlaying = true;
+            this.startAnimating(90);
+        }
     }
 
     calculateAverageColor(randomOpacity=false) {
