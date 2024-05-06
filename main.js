@@ -6,6 +6,7 @@ import { Enemy } from './modules/enemy.js';
 import { Audio } from './modules/audio.js';
 import { Leaderboard } from './modules/leaderboard.js';
 import { Arcade } from './modules/arcade.js';
+import { GPS } from './modules/gps.js';
 
 class Game {
     constructor() {
@@ -13,6 +14,7 @@ class Game {
         this.audio = new Audio();
         this.leaderboard = new Leaderboard();
         this.arcade = new Arcade();
+        this.gps = new GPS();
         this.canvas = document.querySelector(".gameCanvas");
         this.ctx = this.canvas.getContext('2d');
         this.player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2), this);
