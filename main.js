@@ -7,6 +7,7 @@ import { Audio } from './modules/audio.js';
 import { Leaderboard } from './modules/leaderboard.js';
 import { Arcade } from './modules/arcade.js';
 import { GPS } from './modules/gps.js';
+import { Joystick } from './modules/joystick.js';
 
 class Game {
     constructor() {
@@ -14,6 +15,7 @@ class Game {
         this.audio = new Audio();
         this.leaderboard = new Leaderboard();
         this.arcade = new Arcade();
+        this.joystick = new Joystick();
         this.gps = new GPS();
         this.canvas = document.querySelector(".gameCanvas");
         this.ctx = this.canvas.getContext('2d');
@@ -201,6 +203,7 @@ class Game {
         this.drawSprites(this.enemies);
         this.drawSprites(this.bullets);
 
+        this.joystick.rotate(this.input.gunDirection);
         document.querySelector("#score").textContent = `Score: ${this.score}`;
     }
 

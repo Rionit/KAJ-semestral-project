@@ -101,6 +101,7 @@ export class Input{
             const length = Math.sqrt(x * x + y * y);
             return { x: x / length, y: y / length };
         }
+        return { x: x, y: y };
     }
 
     get isShooting() {

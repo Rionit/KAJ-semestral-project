@@ -93,6 +93,7 @@
     grid-row: 3;    
     grid-column: 1 / 4;  
     transform: rotateX(30deg) translateZ(-100px) translateY(-25px);
+    transform-style: preserve-3d;
 }
 
 .arcade_front .bottom{
@@ -101,7 +102,7 @@
 }
 
 .arcade_front svg{
-    background: lightblue;
+    background: var(--transparent);
 }
 
 .arcade_front canvas {
@@ -112,6 +113,24 @@
 .arcade_front .star {
     fill: var(--star-color);
     filter: drop-shadow(0px 0px 50px var(--star-color));
+}
+
+.joystick {
+    fill: rgb(50,50,50);
+    stroke:black;
+    stroke-width: 10px;
+    transition: all 0.3s;
+    transform-origin: bottom center;
+    transform: translateX(1100px) translateY(-300px) rotateZ(0deg) rotateX(-30deg);
+}
+
+.joystick_holder {
+    fill: rgb(50,50,50);
+    stroke:black;
+    stroke-width: 10px;
+    transition: all 0.3s;
+    transform-origin: bottom center;
+    transform: translateX(995px) translateY(-282px) rotateZ(0deg) rotateX(-30deg);
 }
 
 @media (max-width: 1500px) {
