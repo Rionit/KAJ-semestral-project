@@ -6,12 +6,12 @@ export class Arcade {
         this.animationID;
 
         this.transform = {
-            scale: 0.6,
+            scale: 0.3,
             rotateX: -30,
             rotateY: -30,
             rotateZ: 0,
             translateX: 0,
-            translateY: 0,
+            translateY: -900,
             translateZ: 0
         }
         this.startAnimating();
@@ -48,7 +48,7 @@ export class Arcade {
     applyTransform(){
         const { scale, rotateX, rotateY, rotateZ, translateX, translateY, translateZ } = this.transform;
 
-        this.arcade.style.transform = `scale(${scale}) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) translateX(${translateX}) translateY(${translateY}) translateZ(${translateZ})`;
+        this.arcade.style.transform = `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) scale(${scale}) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
     }
 
     animation(){
@@ -82,13 +82,15 @@ export class Arcade {
         this.transform.rotateX = 0;
         this.transform.rotateY = 0;
         this.isExpanded = true;
+        this.transform.translateY = -100;
     }
 
     collapse() {
         this.isExpanded = false;
-        this.transform.scale = .6;
+        this.transform.scale = .3;
         this.transform.rotateX = -30;
         this.transform.rotateY = -30;
+        this.transform.translateY = -900;
     }
 
     handleArcadeClick(event) {
