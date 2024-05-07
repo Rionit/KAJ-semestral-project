@@ -262,8 +262,13 @@ class Game {
 
             if (elapsed > fpsInterval) {
                 then = now - (elapsed % fpsInterval);
-                this.update();
-                this.draw();
+
+                if(!this.input.paused) {
+                    this.update();
+                    this.draw();
+                } else {
+                    this.drawSprite(this.titleScreen);
+                }
             }
         };
 

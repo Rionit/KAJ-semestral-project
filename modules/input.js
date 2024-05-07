@@ -10,6 +10,7 @@ export class Input{
         this.#pressedKeys = {w: false, a: false, s: false, d: false, ArrowDown: false, ArrowUp: false, ArrowLeft: false, ArrowRight: false};
         document.addEventListener('keydown', this.handleKeyEvent.bind(this));
         document.addEventListener('keyup', this.handleKeyEvent.bind(this));
+        this.paused = false;
     }
 
     reset(){
@@ -24,6 +25,12 @@ export class Input{
 
     handleKeyEvent(e) {
         const key = e.key;
+
+        if((this.paused || key === "Escape") && e.type === 'keydown'){
+            this.paused = !this.paused;
+            return;
+        }
+
         if (key in this.#pressedKeys) {
             this.#pressedKeys[key] = (e.type === 'keydown');
 
@@ -48,7 +55,8 @@ export class Input{
                 // Prevent the default action (scrolling)
                 e.preventDefault();
             }
-        } else {
+        }
+        else {
             console.log("Error: (" + e.key + ") key was not found!");
         }
     }
