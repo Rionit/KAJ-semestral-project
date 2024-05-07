@@ -2,19 +2,9 @@ export class Arcade {
 
     constructor() {
         this.arcade = document.querySelector('.arcade');
-        this.isExpanded = false;
         this.animationID;
 
-        this.transform = {
-            scale: 0.3,
-            rotateX: -30,
-            rotateY: -30,
-            rotateZ: 0,
-            translateX: 0,
-            translateY: -900,
-            translateZ: 0
-        }
-        this.startAnimating();
+        this.collapse();
         this.applyTransform();
 
         this.arcade.addEventListener("click", this.handleArcadeClick.bind(this));
@@ -78,19 +68,30 @@ export class Arcade {
 
     expand() {
         this.stopAnimating();
-        this.transform.scale = 1;
-        this.transform.rotateX = 0;
-        this.transform.rotateY = 0;
         this.isExpanded = true;
-        this.transform.translateY = -100;
+        this.transform = {
+            scale: 1,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0,
+            translateX: 0,
+            translateY: -100,
+            translateZ: 0
+        }
     }
 
     collapse() {
+        this.startAnimating();
         this.isExpanded = false;
-        this.transform.scale = .3;
-        this.transform.rotateX = -30;
-        this.transform.rotateY = -30;
-        this.transform.translateY = -900;
+        this.transform = {
+            scale: 0.3,
+            rotateX: -30,
+            rotateY: -30,
+            rotateZ: 0,
+            translateX: 0,
+            translateY: -900,
+            translateZ: 0
+        }
     }
 
     handleArcadeClick(event) {
