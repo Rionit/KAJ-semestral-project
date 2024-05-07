@@ -8,18 +8,32 @@ export class Audio{
     }
 
     playRandom(array){
-        array[Math.floor(Math.random()*array.length)].cloneNode(true).play();
+        this.playOneShot(array[Math.floor(Math.random()*array.length)]);
+    }
+
+    playOneShot(sound){
+        sound.cloneNode(true).play();
     }
 
     play(sound){
-        sound.cloneNode(true).play();
+        // console.log("playing sound " + sound.src);
+        sound.play();
     }
 
-    repeat(sound){
-        sound.cloneNode(true).play();
+    resume(sound){
+        if(sound.paused){
+            sound.play();
+        } 
+    }
+
+    pause(sound){
+        if(!sound.paused){
+            sound.pause();
+        } 
     }
 
     stop(sound){
-        sound.stop();
+        sound.pause();
+        sound.currentTime = 0;
     }
 }

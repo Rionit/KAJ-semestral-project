@@ -125,6 +125,10 @@ class Game {
             this.isPlaying = true;
             this.startAnimating(90);
         }
+
+        if(this.input.paused && e.type === "click"){
+            this.input.paused = false;
+        }
     }
 
     calculateAverageColor(randomOpacity=false) {
@@ -225,7 +229,7 @@ class Game {
 
         if (this.input.isShooting) {
             if (this.bulletTimer >= this.bulletRate) {
-                this.audio.play(this.audio.shoot);
+                this.audio.playOneShot(this.audio.shoot);
                 this.bullets.push(new Bullet(new Sprite('./images/bullet.png', 4), this.input.gunDirection, {...this.player.position}));
                 this.bulletTimer = 0;
             }
@@ -252,6 +256,7 @@ class Game {
         let fpsInterval = 1000 / fps;
         let then = Date.now();
         let startTime = then;
+        // console.log("starting music");
         this.audio.play(this.audio.music);
         
         const animate = () => {
@@ -264,9 +269,11 @@ class Game {
                 then = now - (elapsed % fpsInterval);
 
                 if(!this.input.paused) {
+                    this.audio.resume(this.audio.music);
                     this.update();
                     this.draw();
                 } else {
+                    this.audio.pause(this.audio.music);
                     this.drawSprite(this.titleScreen);
                 }
             }

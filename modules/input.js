@@ -28,7 +28,6 @@ export class Input{
 
         if((this.paused || key === "Escape") && e.type === 'keydown'){
             this.paused = !this.paused;
-            return;
         }
 
         if (key in this.#pressedKeys) {
