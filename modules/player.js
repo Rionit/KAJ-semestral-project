@@ -1,12 +1,16 @@
 import { Entity } from './entity.js';
+import { Sprite } from './sprites.js';
 
 export class Player extends Entity {
     #game;
 
-    constructor(sprite, game) {
+    constructor(game) {
         super();
         this.#game = game;
-        this.sprite = sprite;
+        const idleSprite = new Sprite('./images/player_idle.png', .6, 525, 525);
+        const runSprite = new Sprite('./images/player_run.png', .6, 525, 525, true, 2);
+        this.sprites = {idle: idleSprite, run: runSprite};
+        this.sprite = idleSprite;
         this.position = {x: 525, y: 525};
         this.moveSpeed = 4;
     }
@@ -16,6 +20,7 @@ export class Player extends Entity {
     }
 
     update() {
+        this.sprite = this.#game.input.isMoving ? this.sprites.run : this.sprites.idle;
         this.move(this.#game.input.playerDirection, this.moveSpeed);
     }
 }

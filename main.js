@@ -17,7 +17,7 @@ class Game {
         this.gps = new GPS();
         this.canvas = document.querySelector(".gameCanvas");
         this.ctx = this.canvas.getContext('2d');
-        this.player = new Player(new Sprite('./images/player_test.png', .6, 525, 525, true, 2), this);
+        this.player = new Player(this);
         this.titleScreen = new Sprite('./images/title_screen.png');
 
         this.spawns = [
@@ -31,8 +31,7 @@ class Game {
         this.enemies = [];
 
         this.sprites = {
-            background: new Sprite('./images/background.png'),
-            player: this.player.sprite
+            background: new Sprite('./images/background.png')
         };
 
         this.intervalId = null; 
@@ -166,7 +165,8 @@ class Game {
         return Math.random() * (max - min) + min;
     }
 
-    drawSprite(sprite, x=0, y=0) {
+    drawSprite(sprite, centered=false) {
+        const { x, y } = sprite;
         if (sprite.animated) {
             this.ctx.drawImage(
                 sprite.image,
@@ -179,6 +179,8 @@ class Game {
                 sprite.width,
                 sprite.height
             );
+        } else if(centered) {
+            this.ctx.drawImage(sprite.image, x - sprite.width / 2, y - sprite.height / 2, sprite.width, sprite.height);
         } else {
             this.ctx.drawImage(sprite.image, x, y, sprite.width, sprite.height);
         }
@@ -186,16 +188,16 @@ class Game {
 
     drawSprites(spriteArray) {
         for (const item of spriteArray) {
-            this.drawSprite(item.sprite, item.x, item.y);
+            this.drawSprite(item.sprite, true);
         }
     }
 
     draw() {
         for (const key in this.sprites) {
-            const { x, y } = this.sprites[key];
-            this.drawSprite(this.sprites[key], x, y);
+            this.drawSprite(this.sprites[key]);
         }
 
+        this.drawSprite(this.player.sprite, true);
         this.drawSprites(this.enemies);
         this.drawSprites(this.bullets);
 

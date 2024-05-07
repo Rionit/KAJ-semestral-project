@@ -43,6 +43,7 @@ export class Bullet {
         };
 
         this.move();
+        this.#sprite.position = this.#position;
     }
 
     destroy(){this.#destroyed = true}
