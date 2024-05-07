@@ -27,7 +27,7 @@ export class Leaderboard {
         this.leaderboardData.forEach((player, index) => {
             const row = document.createElement("tr");
             row.innerHTML = `
-                <td>${index + 1}</td>
+                <td></td>
                 <td>${player.name}</td>
                 <td>${player.score}</td>
             `;

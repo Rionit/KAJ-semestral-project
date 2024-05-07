@@ -169,6 +169,15 @@ td { filter: drop-shadow(0px 0px 3px currentColor); }
 
 tr { font-size: 1.5em; }
 
+tbody tr:first-child {
+    counter-reset: item;
+}
+
+tbody tr td:first-child::after{
+    content: counter(item) ".";
+    counter-increment: item;
+}
+
 tr:nth-child(1) td { color: var(--star-color); }
 tr:nth-child(2) td { color: var(--silver-color); }
 tr:nth-child(3) td { color: var(--bronze-color); }
