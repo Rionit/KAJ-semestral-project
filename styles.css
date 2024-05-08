@@ -14,6 +14,14 @@
     --paper-color: #ffed87;
 }
 
+body {
+	background: linear-gradient(-45deg, #1C1C1C, #151313, #131011, #080808, #000000);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
+
+/* Arcade */
 .arcade {
     display: flex;
     align-items: center;
@@ -22,44 +30,30 @@
     perspective: none;
     transition: all 0.5s;
     position: absolute;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     left: 0;
     right: 0;
     width: 100%;
     transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
-    /* animation: rotate-arcade 10s infinite linear; */
 }
 
-.arcade_top {
-    position: absolute;
-    width: 1500px;
-    transform: translateY(-1425px) rotateX(90deg);
-}
-
-.arcade_bottom {
-    position: absolute;
-    width: 1500px;
-    transform: translateY(1525px) rotateX(90deg);
-    filter: drop-shadow(0px 0px 1000px black);
-}
-
-.arcade_side_r {
-    position: absolute;
-    width: 1500px;
-    transform: translateX(750px) translateZ(-50px) rotateY(90deg);
-}
-
-.arcade_side_l {
-    position: absolute;
-    width: 1500px;
-    transform: translateX(-750px) translateZ(-50px) rotateY(90deg);
-}
-
+.arcade_top,
+.arcade_bottom,
+.arcade_side_r,
+.arcade_side_l,
 .arcade_back {
     position: absolute;
     width: 1500px;
-    transform: translateZ(-800px) translateY(45px);
+}
+
+/* 3D transformations */
+.arcade_top { transform: translateY(-1425px) rotateX(90deg); }
+.arcade_side_r { transform: translateX(750px) translateZ(-50px) rotateY(90deg); }
+.arcade_side_l { transform: translateX(-750px) translateZ(-50px) rotateY(90deg); }
+.arcade_back { transform: translateZ(-800px) translateY(45px); }
+.arcade_bottom { 
+    transform: translateY(1525px) rotateX(90deg); 
+    filter: drop-shadow(0px 0px 1000px black); 
 }
 
 .arcade_front {
@@ -101,10 +95,6 @@
     grid-column: 1 / 4;  
 }
 
-.arcade_front svg{
-    background: var(--transparent);
-}
-
 .arcade_front canvas {
     animation: flicker 0.4s infinite alternate;   
     transition: all 0.4s;
@@ -115,6 +105,11 @@
     filter: drop-shadow(0px 0px 50px var(--star-color));
 }
 
+svg{
+    background: var(--transparent);
+}
+
+/* Arcade joystick */
 .joystick {
     fill: rgb(50,50,50);
     stroke:black;
@@ -133,11 +128,7 @@
     transform: translateX(995px) translateY(-282px) rotateZ(0deg) rotateX(-30deg);
 }
 
-@media (max-width: 1500px) {
-    /* * { font-size: 1.5em; } */
-    .arcade { width: fit-content; }
-}
-
+/* Arcade score text */
 #score {
     font-family: 'GraphicPixel', sans-serif;
     position: absolute;
@@ -153,14 +144,10 @@
     text-align: center;
 }
 
-/* BUTTONS */
+/* Arcade buttons */
 circle {
     transition: all 0.3s;
     filter: drop-shadow(0px 14px 0px rgb(0 0 0 / 1));
-}
-
-@keyframes flicker {
-    0%, 50%, 100% {}
 }
 
 /* Leaderboard */
@@ -171,8 +158,8 @@ table {
     max-width: 1000px;
     transform: translateY(-2700px) translateX(450px);
     width: 100%;
-    background-color: black; /* Set black background */
-    color: var(--prairie-color); /* Set text color to white */
+    background-color: black; 
+    color: var(--prairie-color);
     border-radius: 20px;
 }
 
@@ -205,7 +192,6 @@ tr:nth-of-type(4n + 4) { color: var(--turqoise-color); }
 tr:nth-of-type(4n + 5) { color: var(--pink-color); }
 tr:nth-of-type(4n + 6) { color: var(--green-color); }
 
-/* Hover effect */
 tbody tr:hover {
     background-color: rgba(255, 255, 255, 0.1);
     color: var(--star-color);
@@ -223,7 +209,7 @@ tr td:last-of-type {
     border-bottom-right-radius: 20px;
 }
 
-
+/* info papers on left side of arcade */
 .paper {
     position: absolute;
     display: flex;
@@ -263,4 +249,28 @@ tr td:last-of-type {
     background-color: var(--tape-gray);
     opacity: 0.5;
     transform: rotateZ(4deg);
+}
+
+/* Animations */
+@keyframes flicker {
+    /* Just a placeholder since I control opacity through js */
+    0%, 50%, 100% {}
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/* Responsive stuff */
+@media (max-width: 1500px) {
+    /* .arcade { ... } */
+    /* Since everything is 3D, idk */
 }
