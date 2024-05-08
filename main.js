@@ -18,7 +18,7 @@ class Game {
         this.joystick = new Joystick();
         this.gps = new GPS();
         this.canvas = document.querySelector(".gameCanvas");
-        this.ctx = this.canvas.getContext('2d');
+        this.ctx = this.canvas.getContext('2d', {willReadFrequently: true});
         this.player = new Player(this);
         this.titleScreen = new Sprite('./images/title_screen.png');
 
@@ -259,7 +259,7 @@ class Game {
 
     startAnimating(fps) {
         let fpsInterval = 1000 / fps;
-        let then = Date.now();
+        let then = performance.now();
         let startTime = then;
         // console.log("starting music");
         this.audio.play(this.audio.music);
@@ -267,7 +267,7 @@ class Game {
         const animate = () => {
             requestAnimationFrame(animate);
 
-            let now = Date.now();
+            let now = performance.now();
             let elapsed = now - then;
 
             if (elapsed > fpsInterval) {
