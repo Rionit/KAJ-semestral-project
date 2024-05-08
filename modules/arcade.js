@@ -121,6 +121,18 @@ export class Arcade {
             this.transform.rotateY += 90;
             history.pushState({ angle: this.transform.rotateY }, null, `#rotate${this.transform.rotateY}`);
         }
+
+        // Manual shifting of arcade so that it's centered
+        // Every other thing I tried didn't work
+        if(this.isExpanded){
+            const rem = (this.transform.rotateY / 90) % 4;
+            if(rem == 1 || rem == -3) 
+                this.transform.translateX = 250;
+            else if (rem == -1 || rem == 3) 
+                this.transform.translateX = -250;
+            else 
+                this.transform.translateX = 0;
+        }
     
         this.applyTransform();
     }
