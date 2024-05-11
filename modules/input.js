@@ -37,6 +37,7 @@ export class Input{
             const circleId = this.getCircleId(key);
             const circle = document.querySelector(circleId);
 
+            // Fake 3D button press animation using transition
             if (circle) {
                 // Add or remove the animation class based on key press
                 if (this.#pressedKeys[key]) {
@@ -66,11 +67,12 @@ export class Input{
             w: '.upBtn',
             a: '.leftBtn',
             s: '.downBtn',
-            d: '.rightBtn',
-            ArrowDown: 'circle3',
-            ArrowUp: 'circle1',
-            ArrowLeft: 'circle2',
-            ArrowRight: 'circle4'
+            d: '.rightBtn'
+            // deprecated since I'm using joystick for arrows
+            // ArrowDown: 'circle3',
+            // ArrowUp: 'circle1',
+            // ArrowLeft: 'circle2',
+            // ArrowRight: 'circle4'
         };
         return keyToCircleId[key];
     }

@@ -32,6 +32,7 @@ export class Enemy extends Entity {
     move(dir, speed) {
         let nextPosition;
 
+        // This makes them not walk straight towards player
         if(Math.abs(dir.x) >= Math.abs(dir.y)) {
             nextPosition = { x: this.position.x + dir.x * speed, y: this.position.y };
         } else {
@@ -49,8 +50,10 @@ export class Enemy extends Entity {
         return normalizedDir;
     }
 
+    // If close to enemy, tries to move away from them, otherwise towards player
     getDirection(){
 
+        // Check if close to other enemy
         for (let other of this.others) {
             if (this !== other && this.checkHit(other)) {
                 return this.calculateDirection(this, other);

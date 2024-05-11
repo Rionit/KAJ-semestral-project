@@ -27,12 +27,10 @@ export class Sprite {
         return (frame * this.frameWidth) % (this.numFrames * this.frameWidth);
     }
     
-    // Getter and setter for x position
     get x() {
         return this.position.x;
     }
     
-    // Getter and setter for y position
     get y() {
         return this.position.y;
     }

@@ -22,16 +22,18 @@ class Game {
         this.player = new Player(this);
         this.titleScreen = new Sprite('./images/title_screen.png');
 
+        // Places where enemies spawn
         this.spawns = [
-            {x: 30, y: 465}, {x: 30, y: 525}, {x: 30, y: 585},      // WEST
-            {x: 970, y: 465}, {x: 970, y: 525}, {x: 970, y: 585},   // EAST
-            {x: 465, y: 30}, {x: 525, y: 30}, {x: 585, y: 30},      // NORTH
-            {x: 465, y: 970}, {x: 525, y: 970}, {x: 585, y: 970}    // SOUTH
+            {x: 30, y: 465}, {x: 30, y: 525}, {x: 30, y: 585},    // WEST
+            {x: 970, y: 465}, {x: 970, y: 525}, {x: 970, y: 585}, // EAST
+            {x: 465, y: 30}, {x: 525, y: 30}, {x: 585, y: 30},    // NORTH
+            {x: 465, y: 970}, {x: 525, y: 970}, {x: 585, y: 970}  // SOUTH
         ];
 
         this.bullets = [];
         this.enemies = [];
 
+        // Could be used for tiles in future
         this.sprites = {
             background: new Sprite('./images/background.png')
         };
@@ -52,8 +54,8 @@ class Game {
     }
 
     setup() {
-        let width = 1000;
-        let height = 1000;
+        const width = 1000;
+        const height = 1000;
         this.createCanvas(width, height);
         this.drawSprite(this.titleScreen);
     }
@@ -64,7 +66,8 @@ class Game {
 
         const playerName = prompt("Game Over! Enter your name:");
 
-        if (playerName && playerName.trim() !== "") {
+        // check if valid name
+        if (playerName && playerName.trim() !== "" && playerName.length < 20) {
             this.leaderboard.addPlayer(playerName, this.score);
             this.restart();
         } else {
@@ -74,40 +77,37 @@ class Game {
     }
 
     restart() {
-        // Reset score to zero
         this.score = 0;
 
         // Delete all enemies and bullets
         this.enemies = [];
         this.bullets = [];
 
-        // Reset input
         this.input.reset();
 
         // Put player in the center
         this.player.position.x = this.canvas.width / 2;
         this.player.position.y = this.canvas.height / 2;
 
+        // start animating
         this.intervalId = setInterval(() => {
             this.animFrame++;
         }, this.animationSpeed);
     }
 
     createCanvas(width, height) {
-        // Set canvas width and height
         this.canvas.width = width;
         this.canvas.height = height;
 
-        this.canvas.addEventListener('mousedown', e => this.canvas.className = "clicked");
-
+        // change cursors
         this.canvas.addEventListener('mouseover', e => {
             this.canvas.style.cursor = 'pointer';
         });
-
         this.canvas.addEventListener('mouseout', e => {
             this.canvas.style.cursor = 'default';
         });
 
+        // glow of screen
         this.canvas.addEventListener('animationiteration', e => {
             this.canvas.style.filter = 'drop-shadow(0px 0px 100px ' + this.calculateAverageColor(true) + ')';
         });
@@ -232,6 +232,7 @@ class Game {
             }
         }
 
+        // shoot new bullet
         if (this.input.isShooting) {
             if (this.bulletTimer >= this.bulletRate) {
                 this.audio.playOneShot(this.audio.shoot);
@@ -240,6 +241,7 @@ class Game {
             }
         }
 
+        // spawn new enemies
         this.elapsedTimeSinceSpawn += this.animationSpeed;
         if (this.elapsedTimeSinceSpawn >= this.enemySpawnTimer) {
             for (let e = 0; e < (Math.random() * (3 - 1) + 1); e++) {

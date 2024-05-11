@@ -11,12 +11,14 @@ export class Audio{
         this.playOneShot(array[Math.floor(Math.random()*array.length)]);
     }
 
+    // plays the sound just once as a new instance
+    // multiple can be playing at the same time
     playOneShot(sound){
         sound.cloneNode(true).play();
     }
 
+    // can be playing only one at a time
     play(sound){
-        // console.log("playing sound " + sound.src);
         sound.play();
     }
 

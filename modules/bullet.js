@@ -38,6 +38,7 @@ export class Bullet {
     }
 
     update(){
+        // if somehow glitches it will die after some time
         if(this.#ttl-- < 0 ) {
             this.#destroyed = true;
         };

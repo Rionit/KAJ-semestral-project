@@ -23,6 +23,8 @@ export class Arcade {
             this.applyTransform();
         });
 
+        // didn't look pretty
+
         // this.arcade.addEventListener('mousemove', e => {
         //     if(!this.isExpanded)
         //         this.arcade.style.cursor = 'zoom-in';
@@ -41,6 +43,14 @@ export class Arcade {
         this.arcade.style.transform = `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) scale(${scale}) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
     }
 
+    /* 
+        custom animation using transitions, 
+        because I couldn't switch fluidly from css animation to transition
+        also this allows to stay in range <0, 360> in the rotateY, otherwise
+        when user would click on arcade it would spin very fast a lot of degrees back to normal
+        this bug actually happens if user manually clicks to rotate when expanded, but I was unable
+        to fix that 
+    */
     animation(){
         let len;
         if(this.transform.rotateY != -30) {
@@ -102,7 +112,8 @@ export class Arcade {
     
         const middleX = window.innerWidth / 2;
     
-        if (Math.abs(middleX - event.clientX) < 250) {
+        if (Math.abs(middleX - event.clientX) < middleX / 2) {
+            // expand or collapse if clicked in middle of screen
             if (!this.isExpanded) {
                 this.expand();
                 history.pushState({ expanded: true }, null, '#expanded');
@@ -121,6 +132,7 @@ export class Arcade {
         }
 
         // Manual shifting of arcade so that it's centered
+        // Only for side with leaderboard and sticky notes
         // Every other thing I tried didn't work
         if(this.isExpanded){
             const rem = (this.transform.rotateY / 90) % 4;
