@@ -1,30 +1,30 @@
 import { Entity } from './entity.js';
 
 export class Enemy extends Entity {
-    #player;
-    #bullets;
+    #game;
     #killed;
 
-    constructor(sprite, player, bullets, others) {
+    constructor(sprite, game) {
         super();
         this.sprite = sprite;
         this.position = sprite.position;
-        this.#player = player;
-        this.#bullets = bullets;
+        this.player = game.player;
+        this.bullets = game.bullets;
+        this.hitboxes = game.hitboxes;
         this.moveSpeed = 2;
         this.#killed = false;
-        this.others = others;
+        this.others = game.enemies;
     }
 
     update() {
-        this.#bullets.forEach(bullet => {
+        this.bullets.forEach(bullet => {
             if (this.checkHit(bullet)) {
                 this.#killed = true;
                 bullet.destroy();
             };
         });
 
-        if(this.checkHit(this.#player)) this.#player.destroy();
+        if(this.checkHit(this.player)) this.player.destroy();
 
         this.move(this.getDirection(), this.moveSpeed);
     }
@@ -41,6 +41,16 @@ export class Enemy extends Entity {
 
         this.position = nextPosition;
         this.sprite.position = this.position;
+    }
+
+    checkCollision(position) {
+        // Iterate through each hitbox and check for collision
+        for (let hitbox of this.hitboxes) {
+            if (hitbox.isInside(position)) {
+                return true; // Collision detected
+            }
+        }
+        return false; // No collision detected
     }
 
     calculateDirection(from, to) {
@@ -60,8 +70,14 @@ export class Enemy extends Entity {
             }
         }
 
-        // If no hit with other enemies, return direction towards the player
-        return this.calculateDirection(this.#player, this);
+        // Check if colliding with hitbox
+        if (this.checkCollision(this.position)) {
+            // Calculate direction towards the center of the map (525, 525)
+            return this.calculateDirection({ position: { x: 525, y: 525 }}, { position: this.position });
+        }
+
+        // If no hit with other enemies or hitboxes, return direction towards the player
+        return this.calculateDirection(this.player, this);
     }
 
     checkHit(target) {

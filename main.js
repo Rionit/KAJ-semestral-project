@@ -8,6 +8,7 @@ import { Leaderboard } from './modules/leaderboard.js';
 import { Arcade } from './modules/arcade.js';
 import { GPS } from './modules/gps.js';
 import { Joystick } from './modules/joystick.js';
+import { Hitbox } from './modules/hitbox.js';
 
 class Game {
     constructor() {
@@ -29,6 +30,17 @@ class Game {
             {x: 465, y: 30}, {x: 525, y: 30}, {x: 585, y: 30},    // NORTH
             {x: 465, y: 970}, {x: 525, y: 970}, {x: 585, y: 970}  // SOUTH
         ];
+
+        this.hitboxes = [
+            new Hitbox(45, 215, 45, 425),
+            new Hitbox(45, 815, 45, 425),
+            new Hitbox(215, 45, 425, 45),
+            new Hitbox(815, 45, 425, 45),
+            new Hitbox(955, 215, 45, 425),
+            new Hitbox(955, 815, 45, 425),
+            new Hitbox(215, 955, 425, 45),
+            new Hitbox(815, 955, 425, 45)
+        ]
 
         this.bullets = [];
         this.enemies = [];
@@ -246,7 +258,7 @@ class Game {
         if (this.elapsedTimeSinceSpawn >= this.enemySpawnTimer) {
             for (let e = 0; e < (Math.random() * (3 - 1) + 1); e++) {
                 const spawnPoint = this.randomSpawnPoint();
-                this.enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, spawnPoint.x, spawnPoint.y, true, 2), this.player, this.bullets, this.enemies));
+                this.enemies.push(new Enemy(new Sprite('./images/enemy.png', .6, spawnPoint.x, spawnPoint.y, true, 2), this));
             }
             this.elapsedTimeSinceSpawn = 0;
             this.enemySpawnTimer = this.randomTime(5000, 100000);

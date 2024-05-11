@@ -22,5 +22,6 @@ export class Player extends Entity {
     update() {
         this.sprite = this.#game.input.isMoving ? this.sprites.run : this.sprites.idle;
         this.move(this.#game.input.playerDirection, this.moveSpeed);
+        console.log(this.position);
     }
 }
