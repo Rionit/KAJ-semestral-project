@@ -2,92 +2,60 @@
 
 
 
-## Getting started
+## Ovládání
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- Myš: Otáčení a přiblížení/oddálení arkády
+- WASD: Pohyb postavy
+- Šipky: Směr střílení
+- Escape: Pozastavení hry
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Popis funkčnosti
 
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Hráč může hrát do nekonečna tuto hru a v případě smrti se jeho skóre zapíše do tabulky, kde je zobrazeno prvních 15 nejlepších míst
+a také poslední místo s nejnižším skórem. Arkáda se dá otáčet a přiblížit klikem myši. Na levé straně najde návod a GPS lokaci svého
+zařízení. Hru kdykoliv může pozastavit stisknutím tlačítka Escape. Doporučuji u menších obrazovek oddálit třeba na 50%, aby se případně
+arkáda vešla na obrazovku, nebo naopak přiblížit, pokud je příliš malá. Všechny rotace a přiblížení/oddálení se dají vrátit s použitím
+tlačítek zpět/vpřed prohlížeče.
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.fel.cvut.cz/dolezfil/kaj_semestral.git
-git branch -M main
-git push -uf origin main
+
 ```
 
-## Integrate with your tools
+## Cíl projektu
 
-- [ ] [Set up project integrations](https://gitlab.fel.cvut.cz/dolezfil/kaj_semestral/-/settings/integrations)
+Tento projekt vznikl pro předmět KAJ na ČVUT FEL. Jednalo se o využití grafiky pomocí SVG a Canvasu se spojením audia, dále také
+aplikace moderních technologií CSS, jako pokročilé selektory, animace, transitions a 3D transformace. To vše s použitím různých JS API
+jako Geolokace, History API a pro splnění OOP jsem svůj kód psal pomocí modulů. Šlo o přepsání minihry ze hry Stardew Valley, která se
+přesněji jmenuje Journey of the Prairie King. Jelikož se ve hře vyskytuje uvnitř hostince jako arkádový automat, tak jsem se snažil
+ji celou vytvořit jako "3D model", který je interaktivní a zábavnější než samotný Canvas s odkazem na tabulku skóre. 
 
-## Collaborate with your team
+## Postup
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### Hra
 
-## Test and Deploy
+Nejprve jsem se snažil naprogramovat samotnou minihru. Tedy začal jsem s vykreslováním jednotlivých obrázků na Canvas, přidal postavě
+ovládání a sepsal standardní funkce herních enginů pro vykreslování a aktualizování (draw a update). Pak jsem přidal jednoduchého nepřítele,
+který pronásleduje hráče a při doteku se stránka refreshnula. Následně jsem přidal možnost střílení a lepší náhodné generování nepřátel.
+Dále bylo zapotřebí dodat zvuky a hudbu, vylepšit pohyb nepřátel, opravit chyby a počítat skóre.
 
-Use the built-in continuous integration in GitLab.
+### Arkáda
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+Když byla hra připravená, začal jsem přidávat části arkády. Začal jsem s tlačítky, které jsem vytvořil jako SVG kolečka, které mají
+animovaný drop-shadow, aby vypadaly 3D při stisknutí.
+Přišlo mi zajímavé zkusit přidat detail, kdy obrazovka vyzařuje světlo a jeho barva je průměrem všech barev na obrazovce. Všeobecně
+u každé věci byla snaha je udělat, aby se zdály co nejvíce 3D.
+Následně zbylo vyzkoušet, zda půjde arkádu udělat celou ve 3D, a tak jsem vytvořil pomocí několika SVG jednoduchých tvarů předek arkády.
+Některé jeho části jsem trochu natočil a posunul a celé poté animací orotoval. To fungovalo, tak jsem dodělal všechny ostatní stěny.
+Přidal jsem ovládání otáčení a přiblížení arkády, různé detaily a naposledy joystick. Ten jsem znova pomocí různých triků
+sestrojil aby se zdál 3D. Využil jsem znovu drop-shadow, rotace a změny barvy podle směru střelby.
 
-***
+### Miscellaneous
 
-# Editing this README
+Ke konci jsem jen doimplementoval hitboxy stromů, opravil chyby, přidal efekty tabulce skóre, pozastavení hry a history API.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+## Odkazy
 
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+[Eric Barone - Autor hry a minihry](https://www.stardewvalley.net/author/concernedape/)
+[Obrázky](https://www.spriters-resource.com/pc_computer/stardewvalley/sheet/82481/)
+[Zvuky](https://www.sounds-resource.com/pc_computer/stardewvalley/)
+[Hudba](https://www.youtube.com/watch?v=yaBNr6zv0ek)
