@@ -7,7 +7,7 @@ export class Arcade {
         this.collapse();
         this.applyTransform();
 
-        this.arcade.addEventListener("click", this.handleArcadeClick.bind(this));
+        window.addEventListener("click", this.handleArcadeClick.bind(this));
 
         window.addEventListener('popstate', event => {
             const state = event.state;
@@ -100,9 +100,7 @@ export class Arcade {
             return;
         }
     
-        // Check if the click is on the middle of the arcade
-        const boundingRect = this.arcade.getBoundingClientRect();
-        const middleX = boundingRect.left + boundingRect.width / 2;
+        const middleX = window.innerWidth / 2;
     
         if (Math.abs(middleX - event.clientX) < 250) {
             if (!this.isExpanded) {
