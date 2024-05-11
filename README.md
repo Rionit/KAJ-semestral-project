@@ -9,6 +9,8 @@
 - Šipky: Směr střílení
 - Escape: Pozastavení hry
 
+![Rotující arkáda](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmUzN2dweWlnY3VpMWVpdmVzcWY1ZXFlY3V6bmJsYTAxMmduZmNueiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IHXU7i6e2zEzRgXDBV/giphy.gif)
+
 ## Popis funkčnosti
 
 Hráč může hrát do nekonečna tuto hru a v případě smrti se jeho skóre zapíše do tabulky, kde je zobrazeno prvních 15 nejlepších míst
