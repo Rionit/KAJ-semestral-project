@@ -156,7 +156,7 @@ table {
     border-collapse: collapse;
     position: absolute;
     max-width: 800px;
-    transform: translateY(-2700px) translateX(550px);
+    transform: translateY(-2725px) translateX(550px);
     width: 100%;
     background-color: black; 
     color: var(--prairie-color);
@@ -179,9 +179,13 @@ tbody tr:first-child {
     counter-reset: item;
 }
 
-tbody tr td:first-child::after{
+tbody tr:not(:last-child) td:first-child::after {
     content: counter(item) ".";
     counter-increment: item;
+}
+
+tbody tr:last-child td:first-child::before{
+    content: "(last) ";
 }
 
 tr:nth-child(1) td { color: var(--star-color); }
