@@ -51,7 +51,7 @@ Ke konci jsem jen doimplementoval hitboxy stromů, opravil chyby, přidal efekty
 
 ## Odkazy
 
-[Eric Barone - Autor hry a minihry](https://www.stardewvalley.net/author/concernedape/)
-[Obrázky](https://www.spriters-resource.com/pc_computer/stardewvalley/sheet/82481/)
-[Zvuky](https://www.sounds-resource.com/pc_computer/stardewvalley/)
-[Hudba](https://www.youtube.com/watch?v=yaBNr6zv0ek)
+[ ] [Eric Barone - Autor hry a minihry](https://www.stardewvalley.net/author/concernedape/)
+[ ] [Obrázky](https://www.spriters-resource.com/pc_computer/stardewvalley/sheet/82481/)
+[ ] [Zvuky](https://www.sounds-resource.com/pc_computer/stardewvalley/)
+[ ] [Hudba](https://www.youtube.com/watch?v=yaBNr6zv0ek)
