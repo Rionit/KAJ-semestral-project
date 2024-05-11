@@ -10,7 +10,7 @@
 - Escape: Pozastavení hry
 
 <div align="center">
-    <img width="100%" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDNhbmd1NHJiNnBibWgyY2Z6dHJ5NnppbWUzOGQ1em5tam90Nml4byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KgrVUo9IQhRKjFUNtq/giphy.gif>
+    <img width="100%" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDNhbmd1NHJiNnBibWgyY2Z6dHJ5NnppbWUzOGQ1em5tam90Nml4byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KgrVUo9IQhRKjFUNtq/giphy.gif">
 </div>
 
 ## Popis funkčnosti
