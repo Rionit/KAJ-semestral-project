@@ -17,10 +17,6 @@ zařízení. Hru kdykoliv může pozastavit stisknutím tlačítka Escape. Dopor
 arkáda vešla na obrazovku, nebo naopak přiblížit, pokud je příliš malá. Všechny rotace a přiblížení/oddálení se dají vrátit s použitím
 tlačítek zpět/vpřed prohlížeče.
 
-```
-
-```
-
 ## Cíl projektu
 
 Tento projekt vznikl pro předmět KAJ na ČVUT FEL. Jednalo se o využití grafiky pomocí SVG a Canvasu se spojením audia, dále také
