@@ -9,7 +9,9 @@
 - Šipky: Směr střílení
 - Escape: Pozastavení hry
 
+<p align="center">
 ![Rotující arkáda](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmUzN2dweWlnY3VpMWVpdmVzcWY1ZXFlY3V6bmJsYTAxMmduZmNueiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IHXU7i6e2zEzRgXDBV/giphy.gif)
+</p>
 
 ## Popis funkčnosti
 
