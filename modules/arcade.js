@@ -3,7 +3,7 @@ export class Arcade {
     constructor() {
         this.arcade = document.querySelector('.arcade');
         this.animationID;
-
+        this.arcade.classList.add('expanded');
         this.collapse();
         this.applyTransform();
 
@@ -78,6 +78,7 @@ export class Arcade {
 
     expand() {
         this.stopAnimating();
+        this.arcade.classList.toggle('expanded');
         this.isExpanded = true;
         this.transform = {
             scale: 1,
@@ -89,9 +90,10 @@ export class Arcade {
             translateZ: 0
         }
     }
-
+    
     collapse() {
         this.startAnimating();
+        this.arcade.classList.toggle('expanded');
         this.isExpanded = false;
         this.transform = {
             scale: 0.3,

@@ -294,7 +294,8 @@ tr td:last-of-type {
 
 /* Responsive stuff */
 @media (max-width: 1500px) {
-    /* .arcade { ... } */
+    .arcade.expanded { width: 100%; } 
+    .arcade:not(.expanded) { width: 100%; } 
     /* Since everything is 3D, idk */
     /* everything I tried broke it */
 }
