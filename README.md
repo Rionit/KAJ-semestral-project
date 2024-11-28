@@ -10,8 +10,10 @@
 - Escape: Pozastavení hry
 
 <div align="center">
-    <img width="100%" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDNhbmd1NHJiNnBibWgyY2Z6dHJ5NnppbWUzOGQ1em5tam90Nml4byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KgrVUo9IQhRKjFUNtq/giphy.gif">
+    <img width="100%" src="https://github.com/Rionit/KAJ-semestral-project/blob/main/gifs/kaj_rot.gif">
 </div>
+
+---
 
 ## Popis funkčnosti
 
@@ -21,6 +23,12 @@ zařízení. Hru kdykoliv může pozastavit stisknutím tlačítka Escape. Dopor
 arkáda vešla na obrazovku, nebo naopak přiblížit, pokud je příliš malá. Všechny rotace a přiblížení/oddálení se dají vrátit s použitím
 tlačítek zpět/vpřed prohlížeče.
 
+<div align="center">
+    <img width="100%" src="https://github.com/Rionit/KAJ-semestral-project/blob/main/gifs/kaj_play.gif">
+</div>
+
+---
+
 ## Cíl projektu
 
 Tento projekt vznikl pro předmět KAJ na ČVUT FEL. Jednalo se o využití grafiky pomocí SVG a Canvasu se spojením audia, dále také
@@ -28,6 +36,12 @@ aplikace moderních technologií CSS, jako pokročilé selektory, animace, trans
 jako Geolokace, History API a pro splnění OOP jsem svůj kód psal pomocí modulů. Šlo o přepsání minihry ze hry Stardew Valley, která se
 přesněji jmenuje Journey of the Prairie King. Jelikož se ve hře vyskytuje uvnitř hostince jako arkádový automat, tak jsem se snažil
 ji celou vytvořit jako "3D model", který je interaktivní a zábavnější než samotný Canvas s odkazem na tabulku skóre. 
+
+<div align="center">
+    <img width="100%" src="https://github.com/Rionit/KAJ-semestral-project/blob/main/gifs/kaj_rot_showcase.gif">
+</div>
+
+---
 
 ## Postup
 
@@ -53,9 +67,11 @@ sestrojil aby se zdál 3D. Využil jsem znovu drop-shadow, rotace a změny barvy
 
 Ke konci jsem jen doimplementoval hitboxy stromů, opravil chyby, přidal efekty tabulce skóre, pozastavení hry a history API.
 
+---
+
 ## Odkazy
 
-[ ] [Eric Barone - Autor hry a minihry](https://www.stardewvalley.net/author/concernedape/)
-[ ] [Obrázky](https://www.spriters-resource.com/pc_computer/stardewvalley/sheet/82481/)
-[ ] [Zvuky](https://www.sounds-resource.com/pc_computer/stardewvalley/)
-[ ] [Hudba](https://www.youtube.com/watch?v=yaBNr6zv0ek)
+[ 1 ] [Eric Barone - Autor hry a minihry](https://www.stardewvalley.net/author/concernedape/)
+[ 2 ] [Obrázky](https://www.spriters-resource.com/pc_computer/stardewvalley/sheet/82481/)
+[ 3 ] [Zvuky](https://www.sounds-resource.com/pc_computer/stardewvalley/)
+[ 4 ] [Hudba](https://www.youtube.com/watch?v=yaBNr6zv0ek)
